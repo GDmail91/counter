@@ -65,6 +65,8 @@ public class Count extends Activity {
         switch( v.getId() )
         {
             // 1. 카운트 시작
+            //gkdkdksdkwekwd
+            //sdsdwwww!!!!
             // ================================================================
             case R.id.start_count_btn:
             {
