@@ -39,12 +39,12 @@ public class Count extends Activity {
     protected void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_main );
+        setContentView( R.layout.count );
 
         // 카운트 서비스 연결
         // ====================================================================
         Intent serviceIntent =
-                new Intent("com.superdroid.service.CountService");
+                new Intent(this,CountService.class);
         bindService( serviceIntent, mConnection, BIND_AUTO_CREATE );
         // ====================================================================
     }
@@ -71,7 +71,7 @@ public class Count extends Activity {
             case R.id.start_count_btn:
             {
                 Intent serviceIntent =
-                        new Intent("com.example.administrator.counter.CountService");
+                        new Intent(this,CountService.class);
 
                 startService( serviceIntent );
 
@@ -84,13 +84,13 @@ public class Count extends Activity {
             case R.id.stop_count_btn:
             {
                 Intent serviceIntent =
-                        new Intent("com.example.administrator.counter.CountService");
+                        new Intent(this,CountService.class);
+                this.stopService(serviceIntent);
 
-                stopService(serviceIntent);
                 break;
+
             }
             // ================================================================
-
             // 3. 현재까지 카운트 된 수치 보기
             // ================================================================
             case R.id.get_cur_number_btn:
