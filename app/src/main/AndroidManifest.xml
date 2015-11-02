@@ -56,6 +56,11 @@
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+
+        <activity android:name=".Stopwatch"
+            android:label ="stopwatch">
+        </activity>
+
         <activity
             android:name=".Count"
             android:label="conter">
