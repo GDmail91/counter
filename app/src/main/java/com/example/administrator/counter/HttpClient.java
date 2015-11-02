@@ -140,7 +140,7 @@ public class HttpClient {
 
                     return true;
                 } else {
-                    toast = Toast.makeText(actControl.getApplicationContext(), "로그인 실패" + result.getString("message"), Toast.LENGTH_LONG);
+                    toast = Toast.makeText(actControl.getApplicationContext(), "로그인 실패 : " + result.getString("message"), Toast.LENGTH_LONG);
                     toast.show();
 
                     Log.d(TAG, "로그인 실패");

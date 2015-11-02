@@ -116,7 +116,7 @@ public class Entrance extends Activity {
             public void onClick(View v) {
                 Log.d(TAG, "로그인 통신 실행");
 
-                if (user_id.getText() == null || user_pw.getText() == null) {
+                if (user_id.getText().toString().equals("") || user_pw.getText().toString().equals("")) {
                     Toast toast = Toast.makeText(getApplicationContext(), "비밀번호 또는 아이디를 입력해 주세요.", Toast.LENGTH_LONG);
                     toast.show();
                 } else {
