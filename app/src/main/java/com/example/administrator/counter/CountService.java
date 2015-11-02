@@ -5,8 +5,6 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
-import android.os.IBinder;
-import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -14,6 +12,7 @@ import android.util.Log;
 
 public class CountService extends Service
 {
+    private static final String TAG = "superdroid_CountService";
     private int     mCurNum      = 0;
     private Thread  mCountThread = null;
 
@@ -21,7 +20,7 @@ public class CountService extends Service
     public void onCreate()
     {
         super.onCreate();
-        Log.i("superdroid", "onCreate()");
+        Log.i(TAG, "onCreate()");
 
         // 1. 노티피케이션 객체 생성
         // ====================================================================
@@ -50,7 +49,7 @@ public class CountService extends Service
     {
         super.onStartCommand(intent, flags, startId);
 
-        Log.i("superdroid", "onStartCommand() : " + intent);
+        Log.i(TAG, "onStartCommand() : " + intent);
 
         if( mCountThread == null)
         {
@@ -60,7 +59,7 @@ public class CountService extends Service
                 {
                     while( true )
                     {
-                        Log.i("superdroid", "Count : " + mCurNum);
+                        Log.i(TAG, "Count : " + mCurNum);
 
                         mCurNum ++;
 
@@ -82,7 +81,7 @@ public class CountService extends Service
     @Override
     public void onDestroy()
     {
-        Log.i("superdroid", "onDestroy()");
+        Log.i(TAG, "onDestroy()");
 
         stopForeground(true);
 
@@ -114,13 +113,13 @@ public class CountService extends Service
 
     public Binder onBind(Intent intent)
     {
-        Log.i("superdroid","onBind()");
+        Log.i(TAG,"onBind()");
         return mBinder;
     }
 
     public boolean onUnbind(Intent intent)
     {
-        Log.i("superdroid","onUnbind()");
+        Log.i(TAG,"onUnbind()");
         return super.onUnbind(intent);
     }
 

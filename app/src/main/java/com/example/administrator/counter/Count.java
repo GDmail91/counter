@@ -6,15 +6,16 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
 import com.example.administrator.counter.CountService.LocalBinder;
 /**
  * Created by Administrator on 2015-09-18.
  */
 public class Count extends Activity {
+    private static final String TAG = "super_CountActivity";
     CountService mCountService = null;
 
     private ServiceConnection mConnection = new ServiceConnection()
@@ -24,13 +25,13 @@ public class Count extends Activity {
                                         IBinder service )
         {
             Log.d( "superdroid", "onServiceConnected()" );
-            LocalBinder binder = (LocalBinder) service;
-            mCountService = binder.getCountService();
+            mCountService = ((LocalBinder)service).getCountService();
         }
 
         @Override
         public void onServiceDisconnected( ComponentName name )
         {
+
             Log.d( "superdroid", "onServiceDisconnected()" );
         }
     };
@@ -39,25 +40,15 @@ public class Count extends Activity {
     protected void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_main );
+        setContentView(R.layout.count);
 
+        Log.d(TAG, "여기 1차");
         // 카운트 서비스 연결
         // ====================================================================
-        Intent serviceIntent =
-                new Intent("com.superdroid.service.CountService");
-        bindService( serviceIntent, mConnection, BIND_AUTO_CREATE );
+        // Intent serviceIntent = new Intent( this, CountService.class );
+        Intent serviceIntent = new Intent( "com.example.administrator.counter.CountService" );
+        bindService(serviceIntent, mConnection, BIND_AUTO_CREATE);
         // ====================================================================
-    }
-
-    @Override
-    protected void onDestroy()
-    {
-        // 카운트 서비스 해제
-        // ====================================================================
-        unbindService( mConnection );
-        // ====================================================================
-
-        super.onDestroy();
     }
 
     public void onClick( View v )
@@ -65,13 +56,11 @@ public class Count extends Activity {
         switch( v.getId() )
         {
             // 1. 카운트 시작
-            //gkdkdksdkwekwd
-            //sdsdwwww!!!!
             // ================================================================
             case R.id.start_count_btn:
             {
                 Intent serviceIntent =
-                        new Intent("com.example.administrator.counter.CountService");
+                        new Intent( this, CountService.class );
 
                 startService( serviceIntent );
 
@@ -84,7 +73,7 @@ public class Count extends Activity {
             case R.id.stop_count_btn:
             {
                 Intent serviceIntent =
-                        new Intent("com.example.administrator.counter.CountService");
+                        new Intent( this, CountService.class );
 
                 stopService(serviceIntent);
                 break;
@@ -100,6 +89,20 @@ public class Count extends Activity {
                         "Cur Count : " +
                                 mCountService.getCurCountNumber(),
                         Toast.LENGTH_LONG ).show();
+                break;
+            }
+            // ================================================================
+
+            // 4. 바인드 삭제
+            // ================================================================
+            case R.id.delete_count_btn:
+            {
+
+                // 카운트 서비스 해제
+                // ====================================================================
+                unbindService(mConnection);
+                // ====================================================================
+
                 break;
             }
             // ================================================================

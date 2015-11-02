@@ -25,4 +25,10 @@
         android:layout_height="wrap_content"
         android:onClick="onClick"/>
 
+    <Button android:id="@+id/delete_count_btn"
+        android:text="show current number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"/>
+
 </LinearLayout>
