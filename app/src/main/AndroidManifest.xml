@@ -27,10 +27,21 @@
             android:label="conter">
 
         </activity>
+    <activity
+        android:name=".Messenger"
+        android:label = ".messenger">
+    </activity>
+
+
 
         <service android:name=".CountService">
             <intent-filter>
                 <action android:name="com.example.administrator.counter.CountService"/>
+            </intent-filter>
+        </service>
+        <service android:name=".MessengerService">
+            <intent-filter>
+                <action android:name="com.example.administrator.counter.messenger"/>
             </intent-filter>
         </service>
     </application>

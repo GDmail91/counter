@@ -39,14 +39,8 @@ public class Count extends Activity {
     protected void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.count );
+        setContentView(R.layout.count);
 
-        // 카운트 서비스 연결
-        // ====================================================================
-        Intent serviceIntent =
-                new Intent(this,CountService.class);
-        bindService( serviceIntent, mConnection, BIND_AUTO_CREATE );
-        // ====================================================================
     }
 
     @Override
@@ -70,10 +64,15 @@ public class Count extends Activity {
             // ================================================================
             case R.id.start_count_btn:
             {
+
+                // 카운트 서비스 연결
                 Intent serviceIntent =
                         new Intent(this,CountService.class);
+                serviceIntent.putExtra("test1",25);
+                bindService(serviceIntent, mConnection, BIND_AUTO_CREATE);
+                startService(serviceIntent);
 
-                startService( serviceIntent );
+                // ====================================================================
 
                 break;
             }
@@ -83,9 +82,19 @@ public class Count extends Activity {
             // ================================================================
             case R.id.stop_count_btn:
             {
-                Intent serviceIntent =
-                        new Intent(this,CountService.class);
-                this.stopService(serviceIntent);
+
+                Toast.makeText( Count.this,
+                        "Cur Count : " +
+                                mCountService.getCurCountNumber(),
+                        Toast.LENGTH_LONG ).show();
+                if(mCountService.getCurCountNumber() >5){
+                    unbindService( mConnection );
+                    Intent serviceIntent =
+                            new Intent(this,CountService.class);
+                    this.stopService(serviceIntent);
+                    Log.d("superdroid", "종료됨");
+                }
+
 
                 break;
 
@@ -95,11 +104,11 @@ public class Count extends Activity {
             // ================================================================
             case R.id.get_cur_number_btn:
             {
-
                 Toast.makeText( Count.this,
                         "Cur Count : " +
                                 mCountService.getCurCountNumber(),
                         Toast.LENGTH_LONG ).show();
+
                 break;
             }
             // ================================================================

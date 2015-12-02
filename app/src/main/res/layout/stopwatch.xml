@@ -19,26 +19,32 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
         android:text="TextView"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         />
     <ToggleButton
         android:id="@+id/toggleButton1"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ToggleButton"
         android:textOff="시작"
         android:textOn="스톱"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         />
     <Button
         android:id = "@+id/marking"
-        android:layout_width="fill_parent "
+        android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:tex = "마킹"/>
+        android:text = "마킹"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        />
 
     <Button
         android:id="@+id/reset"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="초기화"/>
+        android:text="초기화"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        />
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"

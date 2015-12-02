@@ -98,13 +98,13 @@ public class MiniTabFragment extends Fragment {
                     });
 //
 //                    // 세번째 버튼
-//                    mButtonAction3.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            Intent intent = new Intent(getActivity(), alarm.class);
-//                            startActivity(intent);
-//                        }
-//                    });
+                    mButtonAction3.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getActivity(), Messenger.class);
+                            startActivity(intent);
+                        }
+                    });
 //
 //                    // 네번째 버튼
 //                    mButtonAction4.setOnClickListener(new View.OnClickListener() {

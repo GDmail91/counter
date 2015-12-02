@@ -48,8 +48,9 @@ public class CountService extends Service
                                int flags,
                                int startId )
     {
+        int test_good =intent.getIntExtra("test1",1);
         super.onStartCommand(intent, flags, startId);
-
+        Log.d("test",String.valueOf(test_good));
         Log.i("superdroid", "onStartCommand() : " + intent);
 
         if( mCountThread == null)
