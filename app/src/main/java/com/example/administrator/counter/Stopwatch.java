@@ -48,6 +48,12 @@ public class Stopwatch extends Activity {
         findViewById(R.id.marking).setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
+                        markRecord();
+                    }
+                });
+        findViewById(R.id.reset).setOnClickListener(
+                new Button.OnClickListener() {
+                    public void onClick(View v) {
                         cm.setBase(SystemClock.elapsedRealtime());
                         resultLayout.removeAllViews();
                         num = 1;

@@ -6,7 +6,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.example.administrator.counter"
+        applicationId "com.example.administrator.counter_sub"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1

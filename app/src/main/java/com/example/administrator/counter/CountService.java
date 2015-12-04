@@ -12,7 +12,6 @@ import android.util.Log;
 
 public class CountService extends Service
 {
-    private static final String TAG = "superdroid_CountService";
     private int     mCurNum      = 0;
     private Thread  mCountThread = null;
 
@@ -20,7 +19,7 @@ public class CountService extends Service
     public void onCreate()
     {
         super.onCreate();
-        Log.i(TAG, "onCreate()");
+        Log.i("superdroid", "onCreate()");
 
         // 1. 노티피케이션 객체 생성
         // ====================================================================
@@ -47,9 +46,10 @@ public class CountService extends Service
                                int flags,
                                int startId )
     {
+        int test_good =intent.getIntExtra("test1",1);
         super.onStartCommand(intent, flags, startId);
-
-        Log.i(TAG, "onStartCommand() : " + intent);
+        Log.d("test", String.valueOf(test_good));
+        Log.i("superdroid", "onStartCommand() : " + intent);
 
         if( mCountThread == null)
         {
@@ -59,7 +59,7 @@ public class CountService extends Service
                 {
                     while( true )
                     {
-                        Log.i(TAG, "Count : " + mCurNum);
+                        Log.i("superdroid", "Count : " + mCurNum);
 
                         mCurNum ++;
 
@@ -81,7 +81,7 @@ public class CountService extends Service
     @Override
     public void onDestroy()
     {
-        Log.i(TAG, "onDestroy()");
+        Log.i("superdroid", "onDestroy()");
 
         stopForeground(true);
 
@@ -98,7 +98,7 @@ public class CountService extends Service
 
     public int getCurCountNumber( )
     {
-           return mCurNum;
+        return mCurNum;
     }
 
     public class LocalBinder extends Binder{
@@ -113,13 +113,13 @@ public class CountService extends Service
 
     public Binder onBind(Intent intent)
     {
-        Log.i(TAG,"onBind()");
+        Log.i("superdroid","onBind()");
         return mBinder;
     }
 
     public boolean onUnbind(Intent intent)
     {
-        Log.i(TAG,"onUnbind()");
+        Log.i("superdroid","onUnbind()");
         return super.onUnbind(intent);
     }
 

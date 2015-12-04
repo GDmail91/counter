@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">counter</string>
+    <string name="app_name">counter_sub</string>
     <string name="action_settings">Logout</string>
 </resources>

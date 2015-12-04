@@ -32,7 +32,7 @@ public class HttpClient {
     ////////////////////////////////////////////////////////////////////////
 
     // 서버 URL
-    private final static String serverURL = "http://128.199.151.72/clicky/";
+    private final static String serverURL = "http://nayak.mooo.com/clicky/";
 
     /***************
      * 사용 예
