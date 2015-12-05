@@ -27,7 +27,6 @@ import com.example.administrator.counter.CountService.LocalBinder;
  */
 public class Count extends Activity {
     CountService mCountService = null;
-    Vibrator vibe;
 
     private ServiceConnection mConnection = new ServiceConnection()
     {
@@ -52,7 +51,6 @@ public class Count extends Activity {
     {
 
 
-        vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
 
         super.onCreate( savedInstanceState );

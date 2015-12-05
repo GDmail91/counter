@@ -43,6 +43,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text ="show_time"/>
+        <Button
+            android:id="@+id/connect_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text ="connect_time"/>
 
 </LinearLayout>
 

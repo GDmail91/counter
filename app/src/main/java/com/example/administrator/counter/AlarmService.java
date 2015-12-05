@@ -8,12 +8,21 @@ import android.os.Binder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import java.util.Calendar;
+
 /**
  * Created by Administrator on 2015-12-05.
  */
 public class AlarmService extends Service {
-    private int     mCurNum      = 0;
-    private Thread  mCountThread = null;
+    private Thread  mAlarmThread = null;
+    private int mHour = 0;
+    private int mMinute = 0;
+    private int h1;
+    private int m1;
+    private int h2;
+    private int m2;
+
+
 
     @Override
     public void onCreate()
@@ -28,8 +37,8 @@ public class AlarmService extends Service {
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification noti = new NotificationCompat.Builder(this)
-                .setContentTitle("Count Service")
-                .setContentText("Running Count Service")
+                .setContentTitle("Alarm Service")
+                .setContentText("Running Alarm Service")
                 .setSmallIcon( R.drawable.ic_launcher )
                 .setContentIntent( pIntent )
                 .build();
@@ -46,22 +55,33 @@ public class AlarmService extends Service {
                                int flags,
                                int startId )
     {
-        int test_good =intent.getIntExtra("test1",1);
+        h1 =intent.getIntExtra("h1",1);
+        m1 =intent.getIntExtra("m1",2);
+        h2 =intent.getIntExtra("h2",3);
+        m2 =intent.getIntExtra("m2",4);
         super.onStartCommand(intent, flags, startId);
-        Log.d("test",String.valueOf(test_good));
+        Log.d("test", String.valueOf(h1));
+        Log.d("test",String.valueOf(m1));
+        Log.d("test",String.valueOf(h2));
+        Log.d("test",String.valueOf(m2));
         Log.i("superdroid", "onStartCommand() : " + intent);
 
-        if( mCountThread == null)
+        if( mAlarmThread == null)
         {
-            mCountThread = new Thread("Count Thread")
+            mAlarmThread = new Thread("Alarm Thread")
             {
                 public void run()
                 {
                     while( true )
                     {
-                        Log.i("superdroid", "Count : " + mCurNum);
+                        Log.i("superdroid", "hour : " + mHour);
+                        Log.i("superdroid", "minute : " +mMinute);
+                        final Calendar c = Calendar.getInstance();
 
-                        mCurNum ++;
+                        mHour = c.get(Calendar.HOUR_OF_DAY);
+                        mMinute = c.get(Calendar.MINUTE);
+
+
 
                         try{ Thread.sleep( 1000 ); }
                         catch( InterruptedException e )
@@ -72,7 +92,7 @@ public class AlarmService extends Service {
                 }
             };
 
-            mCountThread.start();
+            mAlarmThread.start();
         }
 
         return START_REDELIVER_INTENT;
@@ -85,11 +105,12 @@ public class AlarmService extends Service {
 
         stopForeground(true);
 
-        if( mCountThread != null )
+        if( mAlarmThread != null )
         {
-            mCountThread.interrupt();
-            mCountThread = null;
-            mCurNum = 0;
+            mAlarmThread.interrupt();
+            mAlarmThread = null;
+            mHour = 0;
+            mMinute = 0;
         }
 
         super.onDestroy();
@@ -98,11 +119,14 @@ public class AlarmService extends Service {
 
     public int getCurCountNumber( )
     {
-        return mCurNum;
+        if(mMinute == m1) {
+            return mMinute;
+        }
+        else return 0;
     }
 
     public class LocalBinder extends Binder {
-        AlarmService getCountService()
+        AlarmService getAlarmService()
         {
             return AlarmService.this;
         }
