@@ -54,7 +54,6 @@ public class HttpClient {
     public boolean sendData(String subURL, JSONObject data) {
         // set the server URL
         String url = serverURL + subURL;
-        boolean sendResult = false;
 
         // call data from web URL
         try {

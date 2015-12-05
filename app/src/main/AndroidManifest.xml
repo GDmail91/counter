@@ -43,11 +43,6 @@
         <!-- [END gcm_receiver] -->
 
         <!-- [START Schedule_receiver] -->
-        <receiver android:name=".MySchedulerListener">
-            <intent-filter>
-                <action android:name="com.example.administrator.counter.schedule">
-                </action></intent-filter>
-        </receiver>
         <!-- [END Schedule_receiver] -->
 
         <activity

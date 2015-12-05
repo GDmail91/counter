@@ -125,6 +125,18 @@ public class ButtonList extends ActionBarActivity {
             intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             return true;
+        } else if (id == R.id.test_send) {
+            new HttpHandler().testSend();
+
+            return true;
+        } else if (id == R.id.test_send2) {
+            new HttpHandler().testSend2();
+
+            return true;
+        } else if (id == R.id.test_send3) {
+            new HttpHandler().testSend3();
+
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

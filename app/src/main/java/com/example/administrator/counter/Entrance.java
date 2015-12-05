@@ -49,8 +49,6 @@ public class Entrance extends Activity {
         pb1.setVisibility(View.VISIBLE);
 
         SharedPreferences prefs = getSharedPreferences("PrefName", MODE_PRIVATE);
-        String id = prefs.getString("id", "");
-        String password = prefs.getString("password", "");
         boolean is_login = prefs.getBoolean("is_login", true);
 
         Log.d(TAG, "로그인 상태 : " + is_login);
@@ -58,7 +56,27 @@ public class Entrance extends Activity {
         // 자동 로그인 프로세스
         if (is_login) {
             Log.d(TAG, "자동로그인 대기!");
-            autoLogin(id, password);
+            user_id.setText(prefs.getString("id", ""));
+            user_pw.setText(prefs.getString("password", ""));
+
+            // 로그인 통신 실행
+            try {
+                String userID = user_id.getText().toString();
+                String userPW = user_pw.getText().toString();
+
+                jobj = new JSONObject("{ \"id\" : \"" + userID + "\",\"password\" : \"" + userPW + "\"}");
+
+                // 통신 실행
+                new HttpHandler().loginUser(jobj.toString(), new MyCallback() {
+                    @Override
+                    public void loginProcessing(JSONObject result) {
+                        loginProcess(result);
+                    }
+                });
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         pb1.setVisibility(View.INVISIBLE);
@@ -66,10 +84,35 @@ public class Entrance extends Activity {
         user_id = (EditText)findViewById(R.id.user_id);
         user_pw = (EditText)findViewById(R.id.user_pw);
 
-
         // 로그인 프로세스
-        loginProcess();
+        Button login_btn = (Button) findViewById(R.id.login_btn);
+        login_btn.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 String userID = user_id.getText().toString();
+                 String userPW = user_pw.getText().toString();
+                 if (userID.equals("") || userPW.equals("")) {
+                     Toast toast = Toast.makeText(getApplicationContext(), "비밀번호 또는 아이디를 입력해 주세요.", Toast.LENGTH_LONG);
+                     toast.show();
+                 } else {
+                     // 로그인 통신 실행
+                     try {
+                         jobj = new JSONObject("{ \"id\" : \"" + userID + "\",\"password\" : \"" + userPW + "\"}");
 
+                         // 통신 실행
+                         new HttpHandler().loginUser(jobj.toString(), new MyCallback() {
+                             @Override
+                             public void loginProcessing(JSONObject result) {
+                                 loginProcess(result);
+                             }
+                         });
+
+                     } catch (JSONException e) {
+                         e.printStackTrace();
+                     }
+                 }
+             }
+         });
 
         /**
          * 회원가입 버튼
@@ -86,51 +129,51 @@ public class Entrance extends Activity {
     }
 
 
-    /**
-     * 자동 로그인 프로세스
-     */
-    private void autoLogin(String id, String password) {
-        Log.d(TAG, "로그인 통신 실행");
-
-        try {
-            user_id.setText(id);
-            user_pw.setText(password);
-
-            jobj = new JSONObject("{ id : " + user_id.getText() + ",password : " + user_pw.getText() + "}");
-
-            // 자동로그인 통신 실행
-            new HttpClient().setActControl(Entrance.this).sendData("user/login", jobj) ;
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * 로그인 프로세스
      */
-    public void loginProcess() {
+    public void loginProcess(JSONObject result) {
 
-        Button login_btn = (Button) findViewById(R.id.login_btn);
-        login_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "로그인 통신 실행");
+        Log.d(TAG, "로그인 통신 실행");
+        try {
 
-                if (user_id.getText().toString().equals("") || user_pw.getText().toString().equals("")) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "비밀번호 또는 아이디를 입력해 주세요.", Toast.LENGTH_LONG);
-                    toast.show();
-                } else {
-                    try {
-                        jobj = new JSONObject("{ id : " + user_id.getText() + ",password : " + user_pw.getText() + "}");
+            Toast toast;
+            // 결과에 따라서 인텐트 생성, 액티비티실행
+            if (result.getBoolean("status")) {
+                // Preferences에 id, password 저장
+                SharedPreferences prefs = getSharedPreferences("PrefName", MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
 
-                        // 통신 실행
-                        new HttpClient().setActControl(Entrance.this).sendData("user/login", jobj);
+                editor.remove("id").remove("password");
+                editor.putString("id", user_id.getText().toString());
+                editor.putString("password", user_pw.getText().toString());
+                editor.putBoolean("is_login", true);
+                editor.commit();
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+                toast = Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_LONG);
+                toast.show();
+
+                Log.d(TAG, "로그인 성공");
+
+                Log.d(TAG, "GCM 토큰 : " + new ApplicationClass().GCM_TOKEN);
+
+                Intent intent = new Intent(Entrance.this, ButtonList.class);
+                intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+            } else {
+                toast = Toast.makeText(getApplicationContext(), "로그인 실패 : " + result.getString("message"), Toast.LENGTH_LONG);
+                toast.show();
+
+                Log.d(TAG, "로그인 실패");
             }
-        });
+
+            //new HttpClient().setActControl(Entrance.this).sendData("user/login", jobj);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
