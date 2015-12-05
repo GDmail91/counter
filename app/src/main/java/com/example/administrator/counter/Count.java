@@ -1,12 +1,23 @@
 package com.example.administrator.counter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ComponentName;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Color;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.os.Vibrator;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -16,6 +27,7 @@ import com.example.administrator.counter.CountService.LocalBinder;
  */
 public class Count extends Activity {
     CountService mCountService = null;
+    Vibrator vibe;
 
     private ServiceConnection mConnection = new ServiceConnection()
     {
@@ -38,6 +50,11 @@ public class Count extends Activity {
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {
+
+
+        vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+
         super.onCreate( savedInstanceState );
         setContentView(R.layout.count);
 
@@ -104,10 +121,16 @@ public class Count extends Activity {
             // ================================================================
             case R.id.get_cur_number_btn:
             {
-                Toast.makeText( Count.this,
-                        "Cur Count : " +
-                                mCountService.getCurCountNumber(),
-                        Toast.LENGTH_LONG ).show();
+                AlertDialog.Builder alert = new AlertDialog.Builder(Count.this);
+                alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                //vibe.vibrate(1000);
+                alert.setMessage("테스트 메시지");
+                alert.show();
 
                 break;
             }

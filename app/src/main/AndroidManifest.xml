@@ -21,6 +21,10 @@
             android:label ="stopwatch">
 
         </activity>
+        <activity android:name=".Alarm"
+            android:label = "alarm">
+
+        </activity>
 
         <activity
             android:name=".Count"
@@ -31,7 +35,11 @@
         android:name=".Messenger"
         android:label = ".messenger">
     </activity>
-
+        <service android:name=".AlarmService">
+            <intent-filter>
+                <action android:name="com.example.administrator.counter.AlarmService"/>
+            </intent-filter>
+        </service>
 
 
         <service android:name=".CountService">

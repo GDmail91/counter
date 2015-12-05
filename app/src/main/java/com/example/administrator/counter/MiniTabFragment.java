@@ -101,7 +101,7 @@ public class MiniTabFragment extends Fragment {
                     mButtonAction3.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(getActivity(), Messenger.class);
+                            Intent intent = new Intent(getActivity(), Alarm.class);
                             startActivity(intent);
                         }
                     });

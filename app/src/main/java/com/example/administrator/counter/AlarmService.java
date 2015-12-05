@@ -5,15 +5,13 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
-import android.os.IBinder;
-import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-
-
-public class CountService extends Service
-{
+/**
+ * Created by Administrator on 2015-12-05.
+ */
+public class AlarmService extends Service {
     private int     mCurNum      = 0;
     private Thread  mCountThread = null;
 
@@ -103,10 +101,10 @@ public class CountService extends Service
         return mCurNum;
     }
 
-    public class LocalBinder extends Binder{
-        CountService getCountService()
+    public class LocalBinder extends Binder {
+        AlarmService getCountService()
         {
-            return CountService.this;
+            return AlarmService.this;
         }
     };
 
