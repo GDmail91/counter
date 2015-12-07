@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 /**
  * Created by 영수 on 2015-09-04.
  */
@@ -126,15 +128,14 @@ public class ButtonList extends ActionBarActivity {
             startActivity(intent);
             return true;
         } else if (id == R.id.test_send) {
-            new HttpHandler().testSend();
-
-            return true;
-        } else if (id == R.id.test_send2) {
-            new HttpHandler().testSend2();
-
-            return true;
-        } else if (id == R.id.test_send3) {
-            new HttpHandler().testSend3();
+            new HttpHandler().regBtn("{\"mac_addr\":\"TESTMACADDR\"}", new MyCallback() {
+                @Override
+                public void httpProcessing(JSONObject result) {
+                    Log.d(TAG, "버튼등록 완료");
+                    Toast toast = Toast.makeText(getApplicationContext(), "버튼등록 완료", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            });
 
             return true;
         }

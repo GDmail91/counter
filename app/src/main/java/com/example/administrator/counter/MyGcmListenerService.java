@@ -35,6 +35,9 @@ public class MyGcmListenerService extends GcmListenerService {
 
         // GCM으로 받은 메세지를 디바이스에 알려주는 sendNotification()을 호출한다.
         sendNotification(title, message);
+        Intent intent = new Intent("com.example.administrator.CLICK_BUTTON");
+        intent.putExtra("MAC_ADDR", message);
+        sendBroadcast(intent);
     }
 
 

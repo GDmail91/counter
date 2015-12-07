@@ -69,7 +69,7 @@ public class Entrance extends Activity {
                 // 통신 실행
                 new HttpHandler().loginUser(jobj.toString(), new MyCallback() {
                     @Override
-                    public void loginProcessing(JSONObject result) {
+                    public void httpProcessing(JSONObject result) {
                         loginProcess(result);
                     }
                 });
@@ -102,7 +102,7 @@ public class Entrance extends Activity {
                          // 통신 실행
                          new HttpHandler().loginUser(jobj.toString(), new MyCallback() {
                              @Override
-                             public void loginProcessing(JSONObject result) {
+                             public void httpProcessing(JSONObject result) {
                                  loginProcess(result);
                              }
                          });
@@ -135,7 +135,7 @@ public class Entrance extends Activity {
      */
     public void loginProcess(JSONObject result) {
 
-        Log.d(TAG, "로그인 통신 실행");
+        Log.d(TAG, "로그인 콜백 받음");
         try {
 
             Toast toast;
@@ -169,8 +169,6 @@ public class Entrance extends Activity {
 
                 Log.d(TAG, "로그인 실패");
             }
-
-            //new HttpClient().setActControl(Entrance.this).sendData("user/login", jobj);
 
         } catch (JSONException e) {
             e.printStackTrace();

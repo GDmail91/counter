@@ -5,8 +5,4 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/test_send" android:title="test send"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/test_send2" android:title="test send2"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/test_send3" android:title="test send3"
-        android:orderInCategory="100" app:showAsAction="never" />
 </menu>

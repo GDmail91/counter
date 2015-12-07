@@ -42,8 +42,14 @@
         </receiver>
         <!-- [END gcm_receiver] -->
 
-        <!-- [START Schedule_receiver] -->
-        <!-- [END Schedule_receiver] -->
+        <!-- [START Click_receiver] -->
+        <receiver android:name="com.example.administrator.counter.ClickReceiver">
+            <intent-filter>
+                <action android:name="com.example.administrator.CLICK_BUTTON" />
+                <category android:name="com.example.administrator.counter" />
+            </intent-filter>
+        </receiver>
+        <!-- [END Click_receiver] -->
 
         <activity
             android:name=".ButtonList"

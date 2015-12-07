@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -116,8 +118,57 @@ public class UserRegistration extends Activity {
                     try {
                         jobj.put("reg_id", token);
 
-                        // 통신 실행
-                        new HttpClient().setActControl(UserRegistration.this).sendData("user/join", jobj);
+                        // 회원가입 통신 실행
+                        new HttpHandler().joinUser(jobj.toString(), new MyCallback() {
+                            @Override
+                            public void httpProcessing(JSONObject result) {
+                                Log.d(TAG, "회원가입 콜백 받음");
+                                try {
+                                    /**
+                                     *  id, password 저장, 프로그레스바 제거 및 액티비티 변경
+                                     */
+
+                                    // Preferences에 id, password 저장
+                                    SharedPreferences prefs = getSharedPreferences("PrefName", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = prefs.edit();
+
+                                    // 프로그래스바 제거
+                                    ProgressBar pb1 = (ProgressBar) findViewById(R.id.ProgressBar01);
+                                    pb1.setVisibility(View.INVISIBLE);
+
+                                    Toast toast;
+                                    // 결과에 따라서 인텐트 생성, 액티비티실행
+                                    if (result.getBoolean("status")) {
+                                        editor.putString("id", user_id.getText().toString());
+                                        editor.putString("password", user_pw.getText().toString());
+                                        editor.putBoolean("is_login", true);
+                                        editor.commit();
+
+                                        toast = Toast.makeText(getApplicationContext(), "회원가입 성공", Toast.LENGTH_LONG);
+                                        toast.show();
+
+                                        Log.d(TAG, "회원가입 성공");
+
+                                        Log.d(TAG, "GCM 토큰 : " + new ApplicationClass().GCM_TOKEN);
+
+                                        Intent nextIntent = new Intent(UserRegistration.this, ButtonList.class);
+                                        nextIntent.addFlags(nextIntent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        nextIntent.addFlags(nextIntent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(nextIntent);
+
+                                    } else {
+                                        toast = Toast.makeText(getApplicationContext(), "회원가입 실패 : " + result.getString("message"), Toast.LENGTH_LONG);
+                                        toast.show();
+
+                                        Log.d(TAG, "회원가입 실패 : " + result.getString("message"));
+
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
 
                     } catch (JSONException e) {
                         e.printStackTrace();
