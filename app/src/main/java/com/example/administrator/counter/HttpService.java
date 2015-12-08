@@ -22,7 +22,7 @@ public interface HttpService {
     Call<LinkedTreeMap> loginUser(@Body RequestBody requestBody);
 
     @POST("/clicky/btn")
-    Call<LinkedTreeMap> regBtn(@Header("set-cookie") String cookie, @Body RequestBody requestBody);
+    Call<LinkedTreeMap> regBtn(@Header("cookie") String cookie, @Body RequestBody requestBody);
 
     @Headers("Content-Type : application/json")
     @POST("/clicky/btn/func")

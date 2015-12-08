@@ -3,6 +3,7 @@ package com.example.administrator.counter;
 import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -46,6 +47,12 @@ public class RegistrationIntentService extends IntentService {
                 String scope = GoogleCloudMessaging.INSTANCE_ID_SCOPE;
                 // Instance ID에 해당하는 토큰을 생성하여 가져온다.
                 token = instanceID.getToken(default_senderId, scope, null);
+
+                SharedPreferences prefs = getSharedPreferences("PrefName", MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+
+                editor.putString("gcm_token", token);
+                editor.commit();
 
                 ApplicationClass app = app = (ApplicationClass)getApplicationContext();
                 app.GCM_TOKEN = token;

@@ -156,7 +156,7 @@ public class Entrance extends Activity {
 
                 Log.d(TAG, "로그인 성공");
 
-                Log.d(TAG, "GCM 토큰 : " + new ApplicationClass().GCM_TOKEN);
+                Log.d(TAG, "GCM 토큰 : " + prefs.getString("gcm_token", ""));
 
                 Intent intent = new Intent(Entrance.this, ButtonList.class);
                 intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TASK);
