@@ -26,17 +26,16 @@ public class MyGcmListenerService extends GcmListenerService {
      */
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        String title = data.getString("result");
+        String mac_addr = data.getString("result");
         String message = data.getString("message");
 
         Log.d(TAG, "From: " + from);
-        Log.d(TAG, "Title: " + title);
-        Log.d(TAG, "Message: " + message);
+        Log.d(TAG, "Title: " + mac_addr);
 
         // GCM으로 받은 메세지를 디바이스에 알려주는 sendNotification()을 호출한다.
-        sendNotification(title, message);
+        sendNotification("버튼클릭 되써영", mac_addr);
         Intent intent = new Intent("com.example.administrator.CLICK_BUTTON");
-        intent.putExtra("MAC_ADDR", message);
+        intent.putExtra("MAC_ADDR", mac_addr);
         sendBroadcast(intent);
     }
 

@@ -59,6 +59,7 @@ public class Entrance extends Activity {
             user_id.setText(prefs.getString("id", ""));
             user_pw.setText(prefs.getString("password", ""));
 
+            ApplicationClass.app = (ApplicationClass)getApplicationContext();
             // 로그인 통신 실행
             try {
                 String userID = user_id.getText().toString();
@@ -95,6 +96,7 @@ public class Entrance extends Activity {
                      Toast toast = Toast.makeText(getApplicationContext(), "비밀번호 또는 아이디를 입력해 주세요.", Toast.LENGTH_LONG);
                      toast.show();
                  } else {
+                     ApplicationClass.app = (ApplicationClass)getApplicationContext();
                      // 로그인 통신 실행
                      try {
                          jobj = new JSONObject("{ \"id\" : \"" + userID + "\",\"password\" : \"" + userPW + "\"}");

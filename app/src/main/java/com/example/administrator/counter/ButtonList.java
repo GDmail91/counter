@@ -127,8 +127,19 @@ public class ButtonList extends ActionBarActivity {
             intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             return true;
+        } else if (id == R.id.test_reg) {
+            new HttpHandler().regBtn("{\"mac_addr\":\"TESTMACADDR3\"}", new MyCallback() {
+                @Override
+                public void httpProcessing(JSONObject result) {
+                    Log.d(TAG, "버튼등록 완료");
+                    Toast toast = Toast.makeText(getApplicationContext(), "버튼등록 완료", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            });
+
+            return true;
         } else if (id == R.id.test_send) {
-            new HttpHandler().regBtn("{\"mac_addr\":\"TESTMACADDR2\"}", new MyCallback() {
+            new HttpHandler().testSend( new MyCallback() {
                 @Override
                 public void httpProcessing(JSONObject result) {
                     Log.d(TAG, "버튼등록 완료");
