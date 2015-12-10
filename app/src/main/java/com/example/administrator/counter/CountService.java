@@ -9,7 +9,6 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 
-
 public class CountService extends Service
 {
     private int     mCurNum      = 0;
@@ -48,11 +47,7 @@ public class CountService extends Service
     {
         int test_good =intent.getIntExtra("test1",1);
         super.onStartCommand(intent, flags, startId);
-<<<<<<< HEAD
-        Log.d("test", String.valueOf(test_good));
-=======
         Log.d("test",String.valueOf(test_good));
->>>>>>> ce5aea17ac2d499cf6ed5708ebf300fe8b6b15c4
         Log.i("superdroid", "onStartCommand() : " + intent);
 
         if( mCountThread == null)

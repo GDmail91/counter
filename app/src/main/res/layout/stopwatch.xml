@@ -32,18 +32,11 @@
         />
     <Button
         android:id = "@+id/marking"
-<<<<<<< HEAD
-        android:layout_width="fill_parent"
-        android:layout_height="80dp"
-        android:text="마킹"/>
-=======
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:text = "마킹"
         android:textAppearance="?android:attr/textAppearanceLarge"
         />
->>>>>>> ce5aea17ac2d499cf6ed5708ebf300fe8b6b15c4
-
     <Button
         android:id="@+id/reset"
         android:layout_width="match_parent"

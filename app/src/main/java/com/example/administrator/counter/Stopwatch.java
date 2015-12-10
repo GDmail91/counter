@@ -48,11 +48,7 @@ public class Stopwatch extends Activity {
         findViewById(R.id.marking).setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-<<<<<<< HEAD
-                        markRecord();
-=======
                        markRecord();
->>>>>>> ce5aea17ac2d499cf6ed5708ebf300fe8b6b15c4
                     }
                 });
         findViewById(R.id.reset).setOnClickListener(

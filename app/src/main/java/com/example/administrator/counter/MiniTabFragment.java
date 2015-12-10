@@ -96,8 +96,8 @@ public class MiniTabFragment extends Fragment {
                             startActivity(intent);
                         }
                     });
-//
-//                    // 세번째 버튼
+
+                    // 세번째 버튼
                     mButtonAction3.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -105,15 +105,15 @@ public class MiniTabFragment extends Fragment {
                             startActivity(intent);
                         }
                     });
-//
-//                    // 네번째 버튼
-//                    mButtonAction4.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            Intent intent = new Intent(getActivity(), truefalse.class);
-//                            startActivity(intent);
-//                        }
-//                    });
+
+                    // 네번째 버튼
+                    mButtonAction4.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getActivity(), Message.class);
+                            startActivity(intent);
+                        }
+                    });
 
                     // 다섯번째 버튼
 //                    mButtonAction5.setOnClickListener(new View.OnClickListener() {
