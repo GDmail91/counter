@@ -29,51 +29,71 @@ public class AlarmService extends Service {
 
     public void getInfo(int ho1,int mi1,int ho2,int mi2){
 
-        hour1 = ho1;
+        hour1 = ho1+1;
         minute1 = mi1;
-        hour2 = ho2;
+        hour2 = ho2+1;
         minute2 = mi2;
+        final Calendar c = Calendar.getInstance();
+        mHour = c.get(Calendar.HOUR_OF_DAY)+1;
+        mMinute = c.get(Calendar.MINUTE);
         Log.d("super", "here!!");
         if( test_Thread == null) {
             test_Thread = new Thread("Alarm test_Thread") {
                 public void run() {
                     while (true) {
-                        Log.i("superdroid", "hour : " + mHour);
-                        Log.i("superdroid", "minute : " + mMinute);
-                        final Calendar c = Calendar.getInstance();
 
-                        mHour = c.get(Calendar.HOUR_OF_DAY);
-                        mMinute = c.get(Calendar.MINUTE);
-                        Log.i("superdroid", "현재시 : " + mHour);
-                        Log.i("superdroid", "현재분 : " + mMinute);
-                        Log.i("superdroid", "설정시간1 : " + hour1);
-                        Log.i("superdroid", "설정시간2 : " + hour2);
-                        int original_hour = hour2;
-                        if (hour1>12 &&hour2 < 12) {
+
+
+
+                        Log.i("superdroid", "설정시1 : " + hour1);
+                        Log.i("superdroid", "설정분1 : " + minute1);
+                        Log.i("superdroid", "설정시2 : " + hour2);
+                        Log.i("superdroid", "설정분2 : " + minute2);
+                        if (hour2 < 12) {
                             hour2 = hour2 + 24;
+                            Log.i("superdroid1",toString().valueOf(mHour));
                         }
                         if (mHour < 12) {
                             mHour = mHour + 24;
-                            Log.i("superdroid",toString().valueOf(mHour));
-
+                            Log.i("superdroid2",toString().valueOf(mHour));
                             if (mHour <= hour2 && mHour >= hour1) {
-                                Log.i("superdroid", "GOOD ALARAM11!!");
+                                if(mHour<hour2){
+                                    Log.i("superdroid3",toString().valueOf(mHour));
+                                    Log.i("superdroid", "GOOD ALARAM11!!");
+                                    break;
+                                }
+                                if(mHour==hour2){
+                                    if(mMinute<=minute2&&mMinute>=minute1){
+                                        Log.i("superdroid4",toString().valueOf(mHour));
+                                        Log.i("superdroid", "GOOD ALARAM22!!");
+                                        break;
+                                    }
+                                }
                             }
                         };
                         if (mHour > 12) {
-                            Log.i("superdroid", "설정1 : " + hour1);
-                            Log.i("superdroid", "설정2 : " + hour2);
+                            Log.i("superdroid5",toString().valueOf(mHour));
                             if (mHour <= hour2 && mHour >= hour1) {
-                                Log.i("superdroid", "GOOD ALARAM22!!");
-                                break;
+                                if(mHour<hour2){
+                                    Log.i("superdroid6",toString().valueOf(mHour));
+                                    Log.i("superdroid", "GOOD ALARAM33!!");
+                                    break;
+                                }
+                                if(mHour==hour2){
+                                    if(mMinute<=minute2&&mMinute>=minute1){
+                                        Log.i("superdroid7",toString().valueOf(mHour));
+                                        Log.i("superdroid", "GOOD ALARAM44!!");
+                                        break;
+                                    }
+                                }
+
                             };
                         }
                             try {
                                 Thread.sleep(1000);
                             } catch (InterruptedException e) {
                                 break;
-                            }
-                            ;
+                            };
                         }
 
                 }

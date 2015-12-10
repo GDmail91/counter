@@ -121,7 +121,7 @@ public class Count extends Activity {
             {
 
                 AlarmService alarm_test = new AlarmService();
-                alarm_test.getInfo(10,11,23,55);
+                alarm_test.getInfo(1,27,1,29);
                 break;
             }
             // ================================================================
