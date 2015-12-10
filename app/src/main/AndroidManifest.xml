@@ -69,12 +69,26 @@
         <activity android:name=".Stopwatch"
             android:label ="stopwatch">
         </activity>
+        <activity android:name=".Alarm"
+            android:label = "alarm">
+
+        </activity>
 
         <activity
             android:name=".Count"
             android:label="conter">
 
         </activity>
+    <activity
+        android:name=".Messenger"
+        android:label = ".messenger">
+    </activity>
+        <service android:name=".AlarmService">
+            <intent-filter>
+                <action android:name="com.example.administrator.counter.AlarmService"/>
+            </intent-filter>
+        </service>
+
 
         <!-- [START 로그인 관련 액티비티] -->
         <activity android:name=".Entrance" />
