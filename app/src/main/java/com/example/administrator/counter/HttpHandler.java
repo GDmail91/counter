@@ -211,6 +211,7 @@ public class HttpHandler {
         Log.d(TAG, cookie);
         final Call<LinkedTreeMap> responseData = httpService.regFunc(cookie, requestBody);
 
+        Log.d(TAG, "등록하는 데이터: "+jobj);
         responseData.enqueue(new Callback<LinkedTreeMap>() {
             @Override
             public void onResponse(Response<LinkedTreeMap> response, Retrofit retrofit) {
@@ -313,7 +314,7 @@ public class HttpHandler {
 
         JSONObject jobj =null;
         try {
-             jobj = new JSONObject("{\"fid\" : \"3\"," +
+             jobj = new JSONObject("{\"fid\" : \"2\"," +
                     " \"mac_addr\": \"TESTMACADDR3\"," +
                     " \"title\" : \"개밥주기\"" +
                     "}");

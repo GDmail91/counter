@@ -15,15 +15,76 @@ import java.util.Calendar;
  */
 public class AlarmService extends Service {
     private Thread  mAlarmThread = null;
+    private Thread test_Thread = null;
     private int mHour = 0;
     private int mMinute = 0;
     private int h1;
     private int m1;
     private int h2;
     private int m2;
+    private int hour1;
+    private int minute1;
+    private int hour2;
+    private int minute2;
 
+    public void getInfo(int ho1,int mi1,int ho2,int mi2){
 
+        hour1 = ho1;
+        minute1 = mi1;
+        hour2 = ho2;
+        minute2 = mi2;
+        Log.d("super", "here!!");
+        if( test_Thread == null) {
+            test_Thread = new Thread("Alarm test_Thread") {
+                public void run() {
+                    while (true) {
+                        final Calendar c = Calendar.getInstance();
 
+                        mHour = c.get(Calendar.HOUR_OF_DAY);
+                        mMinute = c.get(Calendar.MINUTE);
+
+                        Log.i("superdroid", "hour : " + mHour);
+                        Log.i("superdroid", "minute : " + mMinute);
+
+                        Log.i("superdroid", "현재시 : " + mHour);
+                        Log.i("superdroid", "현재분 : " + mMinute);
+                        Log.i("superdroid", "설정시간1 : " + hour1);
+                        Log.i("superdroid", "설정분1 : " + minute1);
+                        Log.i("superdroid", "설정시간2 : " + hour2);
+                        Log.i("superdroid", "설정분2 : " + minute2);
+
+                        if (hour1>12 &&hour2 < 12) {
+                            hour2 = hour2 + 24;
+                        }
+                        if (mHour < 12) {
+                            mHour = mHour + 24;
+                            Log.i("superdroid",toString().valueOf(mHour));
+
+                            if (mHour <= hour2 && mHour >= hour1) {
+                                Log.i("superdroid", "GOOD ALARAM11!!");
+                            }
+                        };
+                        if (mHour > 12) {
+                            Log.i("superdroid", "설정1 : " + hour1);
+                            Log.i("superdroid", "설정2 : " + hour2);
+                            if (mHour <= hour2 && mHour >= hour1) {
+                                Log.i("superdroid", "GOOD ALARAM22!!");
+                                break;
+                            };
+                        }
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                break;
+                            }
+                            ;
+                        }
+
+                }
+            };
+                test_Thread.start();
+            }
+        }
     @Override
     public void onCreate()
     {
@@ -55,10 +116,15 @@ public class AlarmService extends Service {
                                int flags,
                                int startId )
     {
+        Log.d("super","ok!!!");
         h1 =intent.getIntExtra("h1",1);
         m1 =intent.getIntExtra("m1",2);
         h2 =intent.getIntExtra("h2",3);
         m2 =intent.getIntExtra("m2",4);
+        hour1 =intent.getIntExtra("hour1",1);
+        minute1 =intent.getIntExtra("minute1",2);
+        hour2 =intent.getIntExtra("hour2",3);
+        minute2 =intent.getIntExtra("minute2",4);
         super.onStartCommand(intent, flags, startId);
         Log.d("test", String.valueOf(h1));
         Log.d("test",String.valueOf(m1));
@@ -74,8 +140,6 @@ public class AlarmService extends Service {
                 {
                     while( true )
                     {
-                        Log.i("superdroid", "hour : " + mHour);
-                        Log.i("superdroid", "minute : " +mMinute);
                         final Calendar c = Calendar.getInstance();
 
                         mHour = c.get(Calendar.HOUR_OF_DAY);
@@ -137,7 +201,7 @@ public class AlarmService extends Service {
 
     public Binder onBind(Intent intent)
     {
-        Log.i("superdroid","onBind()");
+        Log.i("superdroid", "onBind()");
         return mBinder;
     }
 

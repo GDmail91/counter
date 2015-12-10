@@ -7,8 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -110,19 +110,19 @@ public class MiniTabFragment extends Fragment {
                     mButtonAction4.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(getActivity(), Message.class);
+                            Intent intent = new Intent(getActivity(), Timer.class);
                             startActivity(intent);
                         }
                     });
 
                     // 다섯번째 버튼
-//                    mButtonAction5.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            Intent intent = new Intent(getActivity(), timer.class);
-//                            startActivity(intent);
-//                        }
-//                    });
+                    mButtonAction5.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getActivity(), Message.class);
+                            startActivity(intent);
+                        }
+                    });
 
                     break;
 

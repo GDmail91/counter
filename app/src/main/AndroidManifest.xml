@@ -79,24 +79,44 @@
         <activity
             android:name=".Count"
             android:label="conter">
-
         </activity>
-    <activity
-        android:name=".Messenger"
-        android:label = ".messenger">
-    </activity>
+
+        <activity
+            android:name=".Timer"
+            android:label=".timer">
+        </activity>
+
+        <activity
+            android:name=".Messenger"
+            android:label = ".messenger">
+        </activity>
+
+        <activity
+            android:name=".Message"
+            android:label = ".message">
+        </activity>
+
+        <activity
+            android:name=".ShowMessage"
+            android:label = ".showMessage">
+        </activity>
+
         <service android:name=".AlarmService">
             <intent-filter>
-                <action android:name="com.example.administrator.counter.AlarmService"/>
+                <action android:name="com.example.administrator.counter_sub.AlarmService"/>
             </intent-filter>
         </service>
 
+        <service android:name=".TimerService">
+            <intent-filter>
+                <action android:name="com.example.administrator.counter_sub.TimerService"/>
+            </intent-filter>
+        </service>
 
         <!-- [START 로그인 관련 액티비티] -->
         <activity android:name=".Entrance" />
         <activity android:name=".UserRegistration" />
         <!-- [END 로그인 관련 액티비티] -->
-
 
         <service android:name=".CountService">
             <intent-filter>

@@ -43,9 +43,9 @@ public class ClickReceiver extends BroadcastReceiver {
                         // 결과에 따라서 인텐트 생성, 액티비티실행
                         if (status) {
                             Log.d(TAG, "버튼정보 가져옴");
-                            getMessage(context);
+                            //getMessage(context);
 
-                            JSONObject data = result.getJSONObject("data");
+                            JSONObject data = new JSONObject(result.getString("data"));
                             // TODO 버튼 종류에 따른 기능별 작업 실행
                             switch (data.getString("title")) {
                                 case "카운터":
@@ -53,6 +53,23 @@ public class ClickReceiver extends BroadcastReceiver {
 
                                     break;
                                 case "스톱워치":
+                                    break;
+
+                                case "테스트" :
+                                    Log.d(TAG, "테스트 알람 클릭");
+                                    JSONObject info = new JSONObject(data.getString("info"));
+                                    String start = info.getString("start");
+                                    String end = info.getString("end");
+
+                                    String[] s = start.split("_");
+                                    String[] e = end.split("_");
+                                    int h1 = Integer.valueOf(s[0]);
+                                    int m1 = Integer.valueOf(s[1]);
+                                    int h2 = Integer.valueOf(e[0]);
+                                    int m2 = Integer.valueOf(e[1]);
+
+                                    new AlarmService().getInfo(h1, m1, h2, m2);
+                                    Alarm.alarm.getMessage();
                                     break;
 
                             }

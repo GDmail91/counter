@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity = "center"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    >
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtTimerValue"
+        android:layout_weight="1"
+        android:ems="10"
+        android:hint="minutes"
+        android:inputType="phone"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/setTime"
+        android:layout_margin="5dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="Set Timer"
+        android:onClick="onClick"
+        android:textColor="#fff"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/startTime"
+        android:layout_margin="5dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="Start Timer"
+        android:onClick="onClick"
+        android:textColor="#fff"
+        />
+
+    <Button
+        android:id = "@+id/stopTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:onClick="onClick"
+        android:text="Stop Timer"
+        android:visibility="gone"
+        android:textColor="#fff"
+        />
+
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        ></LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+        <TextView
+            android:id="@+id/timeCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="00:00"
+            android:textColor="#fff"
+            android:textSize="60dp"
+            />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
