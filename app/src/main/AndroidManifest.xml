@@ -29,19 +29,30 @@
         <activity
             android:name=".Count"
             android:label="conter">
-
         </activity>
+
+        <activity
+            android:name=".Timer"
+            android:label=".timer">
+        </activity>
+
     <activity
         android:name=".Messenger"
         android:label = ".messenger">
     </activity>
+
         <service android:name=".AlarmService">
             <intent-filter>
                 <action android:name="com.example.administrator.counter.AlarmService"/>
             </intent-filter>
         </service>
 
+        <service android:name="TimerService">
+            <intent-filter>
+                <action android:name="com.example.administrator.counter.TimerService"/>
+            </intent-filter>
 
+        </service>
         <service android:name=".CountService">
             <intent-filter>
                 <action android:name="com.example.administrator.counter.CountService"/>

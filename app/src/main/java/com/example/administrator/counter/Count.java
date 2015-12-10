@@ -119,17 +119,9 @@ public class Count extends Activity {
             // ================================================================
             case R.id.get_cur_number_btn:
             {
-                AlertDialog.Builder alert = new AlertDialog.Builder(Count.this);
-                alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                //vibe.vibrate(1000);
-                alert.setMessage("테스트 메시지");
-                alert.show();
 
+                AlarmService alarm_test = new AlarmService();
+                alarm_test.getInfo(10,11,23,55);
                 break;
             }
             // ================================================================

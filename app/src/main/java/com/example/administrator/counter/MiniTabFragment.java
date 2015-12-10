@@ -106,14 +106,14 @@ public class MiniTabFragment extends Fragment {
                         }
                     });
 //
-//                    // 네번째 버튼
-//                    mButtonAction4.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            Intent intent = new Intent(getActivity(), truefalse.class);
-//                            startActivity(intent);
-//                        }
-//                    });
+                    // 네번째 버튼
+                    mButtonAction4.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getActivity(), Timer.class);
+                            startActivity(intent);
+                        }
+                    });
 
                     // 다섯번째 버튼
 //                    mButtonAction5.setOnClickListener(new View.OnClickListener() {

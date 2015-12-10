@@ -127,7 +127,6 @@ public class Alarm extends Activity {
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute){
                     h2 = hourOfDay;
                     m2 = minute;
-
                 }
             };
     private void connect_service(){
@@ -135,8 +134,10 @@ public class Alarm extends Activity {
                 "Cur Count : " +
                         mAlarmService.getCurCountNumber(),
                 Toast.LENGTH_LONG ).show();
+    };
 
-    }
+
+
 
     private void updateDisplay(){
         mText.setText(String.format("%d시 %d분에서 %d시 %d분",h1,m1,h2,m2));
@@ -148,9 +149,6 @@ public class Alarm extends Activity {
         serviceIntent.putExtra("m2",m2);
         bindService(serviceIntent, mConnection, BIND_AUTO_CREATE);
         startService(serviceIntent);
-
-
-
 
 
     }
