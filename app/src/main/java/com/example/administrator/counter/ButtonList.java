@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -69,37 +71,49 @@ public class ButtonList extends ActionBarActivity {
         m_ListView.setAdapter(m_ListAdapter);
         m_ListView.setOnItemClickListener(onClickListItem);
 
-        // ListView에 아이템 추가
-        m_ListAdapter.add("First Button");
-        m_ListAdapter.add("Second Button");
-        m_ListAdapter.add("Third Button");
-        m_ListAdapter.add("Forth Button");
-        m_ListAdapter.add("Fifth Button");
-        m_ListAdapter.add("Sixth Button");
-        m_ListAdapter.add("Seventh Button");
-        m_ListAdapter.add("afsdfa Button");
-        m_ListAdapter.add("asdfsdafe Button");
-        m_ListAdapter.add("retert Button");
-        m_ListAdapter.add("Fqer Button");
-        m_ListAdapter.add("agsga Button");
-        m_ListAdapter.add("qrqerqetsa Button");
-
+        getButtonTitle();
 
     }
 
     // 버튼 목록 얻어오는 함수
-    private String[] getButtonTitle() {
-        SharedPreferences prefs = getSharedPreferences("PrefName", MODE_PRIVATE);
-        String id = prefs.getString("id", "");
-
+    private void getButtonTitle() {
         new HttpHandler().getBtnList(new MyCallback() {
             @Override
             public void httpProcessing(JSONObject result) {
                 // TODO 결과에서 타이틀 얻어와야함
+                Log.d(TAG, "버튼 목록 콜백 받음");
+                Log.d(TAG, result.toString());
+                try {
+                    Boolean status = result.getBoolean("status");
+                    String message = result.getString("message");
+                    // 결과에 따라서 인텐트 생성, 액티비티실행
+                    if (status) {
+                        Log.d(TAG, "버튼정보 가져옴");
+
+                        JSONArray data = new JSONArray(result.getString("data"));
+                        Log.d(TAG, data.toString());
+
+                        String[] tempTitles = new String[data.length()];
+                        for (int i = 0; i < data.length(); i++) {
+                            // 버튼의 타이틀 받아옴
+                            tempTitles[i] = data.getJSONObject(i).getString("title");
+                            Log.d(TAG, tempTitles[i]);
+
+                            // ListView에 아이템 추가
+                            m_ListAdapter.add(
+                                    tempTitles[i],
+                                    data.getJSONObject(i).getString("mac_addr")
+                            );
+                        }
+
+                    } else {
+                        Log.d(TAG, "버튼정보 가져오기 실패: " + message);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
-
-        return new String[]{}  ;
     }
 
     // 아이템 터치 이벤트

@@ -19,9 +19,11 @@ import java.util.ArrayList;
 public class ButtonAdapter extends BaseAdapter {
 
     private ArrayList<String> m_List;
+    private ArrayList<String> m_Mac;
 
     public ButtonAdapter() {
         m_List = new ArrayList<String>();
+        m_Mac = new ArrayList<String>();
     }
 
     // 현재 아이템의 수를 리턴
@@ -75,7 +77,7 @@ public class ButtonAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     // 터치 시 해당 아이템 이름 출력
-                    Toast.makeText(context, "리스트 클릭 : " + m_List.get(pos), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "리스트 클릭 : " + m_List.get(pos) +"\n MAC_ADDR: "+m_Mac.get(pos), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -95,13 +97,15 @@ public class ButtonAdapter extends BaseAdapter {
     }
 
     // 외부에서 아이템 추가 요청 시 사용
-    public void add(String _msg) {
+    public void add(String _msg, String _mac) {
         m_List.add(_msg);
+        m_Mac.add(_mac);
     }
 
     // 외부에서 아이템 삭제 요청 시 사용
     public void remove(int _position) {
         m_List.remove(_position);
+        m_Mac.remove(_position);
     }
 
 

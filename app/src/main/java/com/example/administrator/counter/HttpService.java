@@ -23,6 +23,9 @@ public interface HttpService {
     @POST("/clicky/user/login")
     Call<LinkedTreeMap> loginUser(@Body RequestBody requestBody);
 
+    @GET("/clicky/btn")
+    Call<LinkedTreeMap> getBtnList(@Header("cookie") String cookie );
+
     @POST("/clicky/btn")
     Call<LinkedTreeMap> regBtn(@Header("cookie") String cookie, @Body RequestBody requestBody);
 
@@ -33,8 +36,6 @@ public interface HttpService {
     @GET("/clicky/btn/func/{mac}")
     Call<LinkedTreeMap> getBtn(@Header("cookie") String cookie, @Path("mac") String mac_addr );
 
-    @GET("/clicky/btn/func")
-    Call<LinkedTreeMap> getBtnList(@Header("cookie") String cookie );
 
 
     @Headers("Content-Type : application/json")
