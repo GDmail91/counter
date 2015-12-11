@@ -128,7 +128,7 @@ public class ButtonList extends ActionBarActivity {
             startActivity(intent);
             return true;
         } else if (id == R.id.test_reg) {
-            new HttpHandler().regBtn("{\"mac_addr\":\"TESTMACADDR3\"}", new MyCallback() {
+            new HttpHandler().regBtn("{\"mac_addr\":\"TESTMACADDR4\"}", new MyCallback() {
                 @Override
                 public void httpProcessing(JSONObject result) {
                     Log.d(TAG, "버튼등록 완료");

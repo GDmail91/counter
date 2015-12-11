@@ -1,5 +1,6 @@
 package com.example.administrator.counter;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.internal.LinkedTreeMap;
@@ -260,7 +261,7 @@ public class HttpHandler {
      * @param mac_addr 얻어올 버튼의 MAC Address
      * @param callback result 콜백
      */
-    public void getBtn(String mac_addr, final MyCallback callback) {
+    public void getBtn(String mac_addr, final Context context, final ReceiverCallback callback) {
         // 보내는 데이터
         cookie = ApplicationClass.app.getToken();
         Log.d(TAG, "쿠키: "+cookie);
@@ -282,6 +283,7 @@ public class HttpHandler {
                             data = temp.get("data").toString();
 
                         result = new JSONObject("{\"status\":"+status+",\"message\":\""+messages+"\",\"data\":\""+data+"\"}");
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -295,7 +297,7 @@ public class HttpHandler {
                     // TODO error
                 }
 
-                callback.httpProcessing(result);
+                callback.httpProcessing(context, result);
             }
 
             @Override

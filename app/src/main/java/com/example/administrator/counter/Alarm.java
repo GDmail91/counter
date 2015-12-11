@@ -51,6 +51,60 @@ public class Alarm extends Activity {
     private Button end_alarm;
     private Button show_alarm;
     private Button connect_alarm;
+    private Thread test_Thread = null;
+    private int hour1;
+    private int minute1;
+    private int hour2;
+    private int minute2;
+
+
+    public void getInfo(int ho1,int mi1,int ho2,int mi2){
+
+        hour1 = ho1;
+        minute1 = mi1;
+        hour2 = ho2;
+        minute2 = mi2;
+        Log.d("super", "here!!");
+        if( test_Thread == null) {
+            test_Thread = new Thread("Alarm test_Thread") {
+                public void run() {
+                    while (true) {
+
+                        final Calendar c = Calendar.getInstance();
+                        mHour = c.get(Calendar.HOUR_OF_DAY);
+                        mMinute = c.get(Calendar.MINUTE);
+
+                        if (hour1>12 &&hour2 < 12) {
+                            hour2 = hour2 + 24;
+                        }
+                        if (mHour < 12) {
+                            mHour = mHour + 24;
+                            Log.i("superdroid",toString().valueOf(mHour));
+
+                            if (mHour <= hour2 && mHour >= hour1) {
+                                Log.i("superdroid", "GOOD ALARAM11!!");
+                            }
+                        };
+                        if (mHour > 12) {
+                            Log.i("superdroid", "설정1 : " + hour1);
+                            Log.i("superdroid", "설정2 : " + hour2);
+                            if (mHour <= hour2 && mHour >= hour1) {
+                                Log.i("superdroid", "GOOD ALARAM22!!");
+                                break;
+                            };
+                        }
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            break;
+                        };
+                    }
+
+                }
+            };
+            test_Thread.start();
+        }
+    }
 
     private ServiceConnection mConnection = new ServiceConnection()
     {

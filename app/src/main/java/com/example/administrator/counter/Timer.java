@@ -86,6 +86,11 @@ public class Timer extends Activity{
             edtTimerValue.setVisibility(View.GONE);
             edtTimerValue.setText("");
             startTimer();
+
+         if (v.getId() == R.id.setTime){
+             int time = Integer.parseInt(edtTimerValue.getText().toString());
+
+         }
         }
     }
 

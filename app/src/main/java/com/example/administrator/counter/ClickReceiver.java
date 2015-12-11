@@ -32,9 +32,9 @@ public class ClickReceiver extends BroadcastReceiver {
             Toast.makeText(context, "Broadcast : "+macAddr, Toast.LENGTH_LONG).show();
 
             // 버튼정보 가져오는 통신 실행
-            new HttpHandler().getBtn(macAddr, new MyCallback() {
+            new HttpHandler().getBtn(macAddr, context, new ReceiverCallback() {
                 @Override
-                public void httpProcessing(JSONObject result) {
+                public void httpProcessing(Context context, JSONObject result) {
 
                     Log.d(TAG, "버튼정보 콜백 받음");
                     try {
@@ -46,6 +46,7 @@ public class ClickReceiver extends BroadcastReceiver {
                             //getMessage(context);
 
                             JSONObject data = new JSONObject(result.getString("data"));
+                            JSONObject info;
                             // TODO 버튼 종류에 따른 기능별 작업 실행
                             switch (data.getString("title")) {
                                 case "카운터":
@@ -57,7 +58,7 @@ public class ClickReceiver extends BroadcastReceiver {
 
                                 case "테스트" :
                                     Log.d(TAG, "테스트 알람 클릭");
-                                    JSONObject info = new JSONObject(data.getString("info"));
+                                    info = new JSONObject(data.getString("info"));
                                     String start = info.getString("start");
                                     String end = info.getString("end");
 
@@ -68,8 +69,27 @@ public class ClickReceiver extends BroadcastReceiver {
                                     int h2 = Integer.valueOf(e[0]);
                                     int m2 = Integer.valueOf(e[1]);
 
+                                    int flag = 1;
                                     new AlarmService().getInfo(h1, m1, h2, m2);
-                                    Alarm.alarm.getMessage();
+                                    // TODO 위 new AlarmService().getInfo(h1, m1, h2, m2); 의 결과값에 따라서
+                                    // TODO flag 설정하여 getMessage에 보내는 메세지를 다르게 해야함
+                                    switch (flag) {
+                                        case 1:
+                                            getMessage(context, "해야할게 있어요");
+                                            break;
+                                        case 2:
+                                            getMessage(context, "수행이 끝났어요");
+                                            break;
+                                        case 3:
+                                            getMessage(context, "할일을 못했어요ㅠ");
+                                            break;
+                                    }
+
+                                    break;
+                                case "테스트2" :
+                                    Log.d(TAG, "테스트 알람 클릭");
+
+                                    getMessage(context, result.getString("content"));
                                     break;
 
                             }
@@ -88,7 +108,7 @@ public class ClickReceiver extends BroadcastReceiver {
 
 
     // 팝업 메세지 알림
-    private void getMessage(Context context) {
+    private void getMessage(Context context, String data) {
         SharedPreferences prefs = context.getSharedPreferences("PrefName", context.MODE_PRIVATE);
         boolean is_popup = prefs.getBoolean("is_login", true);
 
@@ -98,6 +118,7 @@ public class ClickReceiver extends BroadcastReceiver {
             Log.d(TAG, "메세지 팝업 올림");
             // 팝업으로 사용할 액티비티를 호출할 인텐트를 작성한다.
             Intent popupIntent = new Intent(context, ShowMessage.class)
+                    .putExtra("message", data)
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             // 그리고 호출한다.
             context.startActivity(popupIntent);
