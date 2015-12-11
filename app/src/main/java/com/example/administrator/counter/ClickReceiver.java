@@ -47,16 +47,21 @@ public class ClickReceiver extends BroadcastReceiver {
 
                             JSONObject data = new JSONObject(result.getString("data"));
                             JSONObject info;
-                            // TODO 버튼 종류에 따른 기능별 작업 실행
-                            switch (data.getString("title")) {
-                                case "카운터":
-                                    Log.d(TAG, data.getString("info"));
+                            // TODO 버튼 종류에 따른 기능별 작업 실행(fid 로 바꿔야함 )
+                            switch (data.getInt("fid")) {
+                                case 1:
+                                    // 카운터
+                                    Log.d(TAG, "테스트 카운터 클릭");
+                                    info = new JSONObject(data.getString("info"));
+                                    Log.d(TAG, info.toString());
+                                    // cnt를 가지고 최대값이 되었을때 최대치를 찍었다고 보여줌
+                                    // 그전까진 그전만큼 찍었다고 보여줌
+                                    getMessage(context, Integer.toString(info.getInt("cnt")));
 
                                     break;
-                                case "스톱워치":
-                                    break;
 
-                                case "테스트" :
+                                case 2 :
+                                    // 알람
                                     Log.d(TAG, "테스트 알람 클릭");
                                     info = new JSONObject(data.getString("info"));
                                     String start = info.getString("start");
@@ -86,7 +91,27 @@ public class ClickReceiver extends BroadcastReceiver {
                                     }
 
                                     break;
-                                case "테스트2" :
+
+                                case 3:
+                                    // 스탑워치
+                                    break;
+
+                                case 4:
+                                    // 체커
+                                    Log.d(TAG, "테스트 체커 클릭");
+                                    info = new JSONObject(data.getString("info"));
+                                    Log.d(TAG, info.toString());
+                                    // chk를 가지고 0이 되었을때 마지막까지 찍었다고 보여줌
+                                    // 그전까진 그전만큼 찍었다고 보여줌
+                                    getMessage(context, Integer.toString(info.getInt("chk")));
+                                    break;
+
+                                case 5 :
+                                    // 타이머
+                                    break;
+
+                                case 6 :
+                                    // 메세지
                                     Log.d(TAG, "테스트 알람 클릭");
                                     info = new JSONObject(data.getString("info"));
 

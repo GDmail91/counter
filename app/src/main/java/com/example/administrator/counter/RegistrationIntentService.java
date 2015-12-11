@@ -54,8 +54,6 @@ public class RegistrationIntentService extends IntentService {
                 editor.putString("gcm_token", token);
                 editor.commit();
 
-                ApplicationClass app = app = (ApplicationClass)getApplicationContext();
-                app.GCM_TOKEN = token;
                 Log.i(TAG, "GCM Registration Token: " + token);
             }
         } catch (IOException e) {

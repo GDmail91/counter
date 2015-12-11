@@ -3,6 +3,7 @@ package com.example.administrator.counter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -18,6 +19,7 @@ public class MainActivity extends FragmentActivity {
         String mac_addr = getIntent().getStringExtra("mac_addr");
         Bundle bundle = new Bundle();
         bundle.putString("mac_addr", mac_addr);
+        Log.d("MainActivity", "MAC_ADDR: "+mac_addr);
         if(savedInstanceState==null){
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             MiniTabFragment fragment = new MiniTabFragment();

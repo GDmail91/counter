@@ -39,7 +39,7 @@ public class ButtonList extends ActionBarActivity {
          *  로그인 상태 확인
          */
         SharedPreferences prefs = getSharedPreferences("PrefName", MODE_PRIVATE);
-        boolean is_login = prefs.getBoolean("is_login", true);
+        boolean is_login = prefs.getBoolean("is_login", false);
 
         Log.d(TAG, "로그인 상태 : " + is_login);
 
@@ -64,19 +64,21 @@ public class ButtonList extends ActionBarActivity {
             }
         });
 
-        // ListView 생성 및 어댑터 연결
-        m_ListAdapter = new ButtonAdapter();
 
-        m_ListView = (ListView) findViewById(R.id.list_view);
-        m_ListView.setAdapter(m_ListAdapter);
-        m_ListView.setOnItemClickListener(onClickListItem);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         getButtonTitle();
-
     }
 
     // 버튼 목록 얻어오는 함수
     private void getButtonTitle() {
+        // ListView 생성
+        m_ListAdapter = new ButtonAdapter();
+
         new HttpHandler().getBtnList(new MyCallback() {
             @Override
             public void httpProcessing(JSONObject result) {
@@ -112,8 +114,15 @@ public class ButtonList extends ActionBarActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+
+                // ListView 어댑터 연결
+                m_ListView = (ListView) findViewById(R.id.list_view);
+                m_ListView.setAdapter(m_ListAdapter);
+                m_ListView.setOnItemClickListener(onClickListItem);
             }
         });
+
     }
 
     // 아이템 터치 이벤트

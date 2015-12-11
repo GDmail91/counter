@@ -39,4 +39,12 @@
         android:layout_above="@+id/imageView"
         android:layout_centerHorizontal="true" />
 
+    <EditText
+        android:layout_width="250dip"
+        android:layout_height="wrap_content"
+        android:id="@+id/temp_textedit"
+        android:layout_above="@+id/temp_button"
+        android:layout_centerHorizontal="true"
+        android:hint="MAC어드레스"/>
+
 </RelativeLayout>

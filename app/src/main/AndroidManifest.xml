@@ -93,6 +93,11 @@
         </activity>
 
         <activity
+            android:name=".Check"
+            android:label = ".check">
+        </activity>
+
+        <activity
             android:name=".Timer"
             android:label=".timer">
         </activity>

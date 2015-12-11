@@ -38,7 +38,7 @@ public class Message extends Activity {
             JSONObject jobj = new JSONObject()
                     .put("fid", "6")
                     // TODO 버튼리스트에서 등록된 버튼 MAC 가져와야함
-                    .put("mac_addr", "TESTMACADDR5")
+                    .put("mac_addr", getIntent().getStringExtra("mac_addr"))
                     .put("title", "테스트2")
                     .put("content", mEditText.getText());
             Log.d(TAG, "보내는 데이터: "+jobj.toString());

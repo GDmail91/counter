@@ -24,10 +24,14 @@ public class MiniTabFragment extends Fragment {
     private ImageButton mButtonAction3;
     private ImageButton mButtonAction4;
     private ImageButton mButtonAction5;
+    private ImageButton mButtonAction6;
+
+    private String MAC_ADDR;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
+        MAC_ADDR = getArguments().getString("mac_addr");
         return inflater.inflate(R.layout.fragment_mini_tabs, container, false);
 
     }
@@ -80,13 +84,16 @@ public class MiniTabFragment extends Fragment {
                     mButtonAction3 = (ImageButton) view.findViewById(R.id.action3);
                     mButtonAction4 = (ImageButton) view.findViewById(R.id.action4);
                     mButtonAction5 = (ImageButton) view.findViewById(R.id.action5);
+                    mButtonAction6 = (ImageButton) view.findViewById(R.id.action6);
 
 
                     // 첫번째 버튼
                     mButtonAction1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+
                             Intent intent = new Intent(getActivity(), Count.class);
+                            intent.putExtra("mac_addr", MAC_ADDR);
                             startActivity(intent);
                         }
                     });
@@ -123,6 +130,17 @@ public class MiniTabFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(getActivity(), Message.class);
+                            startActivity(intent);
+                        }
+                    });
+
+                    // 여섯번째 버튼
+                    mButtonAction6.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Intent intent = new Intent(getActivity(), Check.class);
+                            intent.putExtra("mac_addr", MAC_ADDR);
                             startActivity(intent);
                         }
                     });

@@ -14,7 +14,11 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -24,6 +28,8 @@ import java.util.Arrays;
 public class NfcReader extends Activity {
     TextView mTextView;
     Button tempButton;
+    EditText tempTextedit;
+
     NfcAdapter mNfcAdapter; // NFC 어댑터
     PendingIntent mPendingIntent; // 수신받은 데이터가 저장된 인텐트
     IntentFilter[] mIntentFilters; // 인텐트 필터
@@ -36,12 +42,22 @@ public class NfcReader extends Activity {
 
         // TODO 임시로 다음스탭으로 넘어가는 버튼
         tempButton = (Button)findViewById(R.id.temp_button);
+        tempTextedit = (EditText)findViewById(R.id.temp_textedit);
         tempButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NfcReader.this, MainActivity.class);
-                intent.putExtra("mac_addr", "TESTMACADDR1");
-                startActivity(intent);
+                new HttpHandler().regBtn("{\"mac_addr\":\"" + tempTextedit.getText().toString() + "\"}", new MyCallback() {
+                    @Override
+                    public void httpProcessing(JSONObject result) {
+                        // TODO if result의 status가 true 일경우만 다음 실행
+                        Toast toast = Toast.makeText(getApplicationContext(), "버튼등록 완료", Toast.LENGTH_LONG);
+                        toast.show();
+
+                        Intent intent = new Intent(NfcReader.this, MainActivity.class);
+                        intent.putExtra("mac_addr", tempTextedit.getText().toString());
+                        startActivity(intent);
+                    }
+                });
             }
         });
 
@@ -70,6 +86,7 @@ public class NfcReader extends Activity {
         }
         mNFCTechLists = new String[][] { new String[] { NfcF.class.getName() } };
     }
+
 
     public void onResume() {
         super.onResume();

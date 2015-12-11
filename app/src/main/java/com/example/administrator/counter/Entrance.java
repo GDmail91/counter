@@ -53,6 +53,9 @@ public class Entrance extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.entrance_layout);
 
+        // GCM 토큰생성 받는 리시버
+        registBroadcastReceiver();
+
         Log.d(TAG, "로딩중...");
         app = (ApplicationClass)getApplicationContext();
 
@@ -104,16 +107,15 @@ public class Entrance extends Activity {
         // 로그인 프로세스
         Button login_btn = (Button) findViewById(R.id.login_btn);
         login_btn.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                  Log.d(TAG, "로그인 프로세스 시작");
+
                  SharedPreferences prefs = getSharedPreferences("PrefName", MODE_PRIVATE);
                  if (prefs.getString("gcm_token", "").isEmpty()) {
                      Log.d(TAG, "GCM 토큰 생성");
                      // GCM 토큰 생성
                      getInstanceIdToken();
-                     // GCM 토큰생성 받는 리시버
-                     registBroadcastReceiver();
                  } else {
                      Log.d(TAG, "GCM 토큰 생성안함");
                      login();
@@ -139,7 +141,7 @@ public class Entrance extends Activity {
      * 로그인 프로세스 시작
      */
     public void login() {
-
+        Log.d(TAG, "login()함수 실행");
         SharedPreferences prefs = getSharedPreferences("PrefName", MODE_PRIVATE);
         String token = prefs.getString("gcm_token", "");
         String userID = user_id.getText().toString();
@@ -231,6 +233,7 @@ public class Entrance extends Activity {
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
             Log.d(TAG, "토큰 생성 서비스 실행");
+
         }
     }
 
