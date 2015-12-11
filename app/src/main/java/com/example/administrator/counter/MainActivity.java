@@ -15,9 +15,13 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        String mac_addr = getIntent().getStringExtra("mac_addr");
+        Bundle bundle = new Bundle();
+        bundle.putString("mac_addr", mac_addr);
         if(savedInstanceState==null){
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             MiniTabFragment fragment = new MiniTabFragment();
+            fragment.setArguments(bundle);
 
             transaction.replace(R.id.mini_content_fragment,fragment);
             transaction.commit();

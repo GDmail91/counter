@@ -24,6 +24,11 @@
     <!-- 알람메세지용 최상위 뷰 권한 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
+    <!-- [START NFC 관련 권한] -->
+    <uses-permission android:name="android.permission.NFC"/>
+    <uses-feature android:name="android.hardware.nfc" android:required="true" />
+    <!-- [END NFC 관련 권한] -->
+
     <application
         android:name=".ApplicationClass"
         android:allowBackup="true"
@@ -62,6 +67,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".NfcReader"
+            android:label="nfc_reader">
+        </activity>
+
 
         <activity
             android:name=".MainActivity"

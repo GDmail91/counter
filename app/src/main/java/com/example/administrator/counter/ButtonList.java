@@ -59,7 +59,7 @@ public class ButtonList extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "클릭키 추가버튼");
-                Intent intent = new Intent(ButtonList.this, MainActivity.class);
+                Intent intent = new Intent(ButtonList.this, NfcReader.class);
                 startActivity(intent);
             }
         });
