@@ -151,7 +151,7 @@ public class UserRegistration extends Activity {
 
                                         Log.d(TAG, "GCM 토큰 : " + prefs.getString("gcm_token", ""));
 
-                                        Intent nextIntent = new Intent(UserRegistration.this, ButtonList.class);
+                                        Intent nextIntent = new Intent(UserRegistration.this, Entrance.class);
                                         nextIntent.addFlags(nextIntent.FLAG_ACTIVITY_CLEAR_TASK);
                                         nextIntent.addFlags(nextIntent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(nextIntent);

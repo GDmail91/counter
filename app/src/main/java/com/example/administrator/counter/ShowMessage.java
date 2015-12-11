@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -31,19 +30,20 @@ public class ShowMessage extends Activity {
                 | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         TextView tv = (TextView)findViewById(R.id.message);
         tv.setText(getIntent().getStringExtra("message"));
-        Button ib = (Button)findViewById(R.id.confirm);
-        ib.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 확인버튼을 누르면 앱의 런처액티비티를 호출한다.
-                Intent intent = new Intent(ShowMessage.this, ButtonList.class);
-                intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
-            }
-        });
 
+    }
+
+    public void onConfirm(View v) {
+        // 확인버튼을 누르면 앱의 런처액티비티를 호출한다.
+        Intent intent = new Intent(ShowMessage.this, ButtonList.class);
+        intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    public void onFinish(View v) {
+        finish();
     }
 
 }

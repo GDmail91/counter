@@ -87,6 +87,21 @@ public class ButtonList extends ActionBarActivity {
 
     }
 
+    // 버튼 목록 얻어오는 함수
+    private String[] getButtonTitle() {
+        SharedPreferences prefs = getSharedPreferences("PrefName", MODE_PRIVATE);
+        String id = prefs.getString("id", "");
+
+        new HttpHandler().getBtnList(id, new MyCallback() {
+            @Override
+            public void httpProcessing(JSONObject result) {
+                // TODO 결과에서 타이틀 얻어와야함
+            }
+        });
+
+        return new String[]{}  ;
+    }
+
     // 아이템 터치 이벤트
     private AdapterView.OnItemClickListener onClickListItem = new AdapterView.OnItemClickListener() {
         @Override
@@ -128,7 +143,7 @@ public class ButtonList extends ActionBarActivity {
             startActivity(intent);
             return true;
         } else if (id == R.id.test_reg) {
-            new HttpHandler().regBtn("{\"mac_addr\":\"TESTMACADDR4\"}", new MyCallback() {
+            new HttpHandler().regBtn("{\"mac_addr\":\"TESTMACADDR5\"}", new MyCallback() {
                 @Override
                 public void httpProcessing(JSONObject result) {
                     Log.d(TAG, "버튼등록 완료");

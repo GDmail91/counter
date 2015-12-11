@@ -47,6 +47,8 @@ public class Entrance extends Activity {
 
         pb1 = (ProgressBar)findViewById(R.id.ProgressBar01);
         pb1.setVisibility(View.VISIBLE);
+        user_id = (EditText)findViewById(R.id.user_id);
+        user_pw = (EditText)findViewById(R.id.user_pw);
 
         SharedPreferences prefs = getSharedPreferences("PrefName", MODE_PRIVATE);
         boolean is_login = prefs.getBoolean("is_login", true);
@@ -56,6 +58,8 @@ public class Entrance extends Activity {
         // 자동 로그인 프로세스
         if (is_login) {
             Log.d(TAG, "자동로그인 대기!");
+            Log.d(TAG, "등록된 ID: " + prefs.getString("id", ""));
+            Log.d(TAG, "등록된 PW: " + prefs.getString("password", ""));
             user_id.setText(prefs.getString("id", ""));
             user_pw.setText(prefs.getString("password", ""));
 
@@ -81,9 +85,6 @@ public class Entrance extends Activity {
         }
 
         pb1.setVisibility(View.INVISIBLE);
-
-        user_id = (EditText)findViewById(R.id.user_id);
-        user_pw = (EditText)findViewById(R.id.user_pw);
 
         // 로그인 프로세스
         Button login_btn = (Button) findViewById(R.id.login_btn);

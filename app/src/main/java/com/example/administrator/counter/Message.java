@@ -32,12 +32,13 @@ public class Message extends Activity {
 
     // 메세지 등록 버튼 클릭
     public void submit_message(View v) {
-        // TODO 메세지 등록된것 서버로 보냄
+        // 메세지 등록된것 서버로 보냄
 
         try {
             JSONObject jobj = new JSONObject()
                     .put("fid", "6")
-                    .put("mac_addr", "TESTMACADDR2")
+                    // TODO 버튼리스트에서 등록된 버튼 MAC 가져와야함
+                    .put("mac_addr", "TESTMACADDR5")
                     .put("title", "테스트2")
                     .put("content", mEditText.getText());
             Log.d(TAG, "보내는 데이터: "+jobj.toString());
@@ -45,7 +46,6 @@ public class Message extends Activity {
             new HttpHandler().regFunc(jobj.toString(), new MyCallback() {
                 @Override
                 public void httpProcessing(JSONObject result) {
-                    // TODO 버튼 클릭시 메소드
                     Log.d(TAG, "메세지 버튼 등록됨");
                     Toast toast = Toast.makeText(getApplicationContext(), "메세지버튼 등록", Toast.LENGTH_LONG);
                     toast.show();

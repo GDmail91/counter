@@ -88,8 +88,9 @@ public class ClickReceiver extends BroadcastReceiver {
                                     break;
                                 case "테스트2" :
                                     Log.d(TAG, "테스트 알람 클릭");
+                                    info = new JSONObject(data.getString("info"));
 
-                                    getMessage(context, result.getString("content"));
+                                    getMessage(context, info.getString("content"));
                                     break;
 
                             }
