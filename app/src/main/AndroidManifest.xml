@@ -58,6 +58,16 @@
         </receiver>
         <!-- [END Click_receiver] -->
 
+        <!-- [START Alarm_receiver] -->
+        <receiver android:name="com.example.administrator.counter.AlarmReceiver">
+            <intent-filter>
+                <action android:name="com.example.administrator.ALARM_RING" />
+                <action android:name="com.example.administrator.ALARM_END" />
+                <category android:name="com.example.administrator.counter" />
+            </intent-filter>
+        </receiver>
+        <!-- [END Alarm_receiver] -->
+
         <activity
             android:name=".ButtonList"
             android:label="@string/app_name" >
