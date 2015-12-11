@@ -26,12 +26,16 @@ public interface HttpService {
     @POST("/clicky/btn")
     Call<LinkedTreeMap> regBtn(@Header("cookie") String cookie, @Body RequestBody requestBody);
 
-    @GET("/clicky/btn/func/{mac}")
-    Call<LinkedTreeMap> getBtn(@Header("cookie") String cookie, @Path("mac") String mac_addr );
-
     @Headers("Content-Type : application/json")
     @POST("/clicky/btn/func")
     Call<LinkedTreeMap> regFunc(@Header("cookie") String cookie, @Body RequestBody requestBody);
+
+    @GET("/clicky/btn/func/{mac}")
+    Call<LinkedTreeMap> getBtn(@Header("cookie") String cookie, @Path("mac") String mac_addr );
+
+    @GET("/clicky/btn/func")
+    Call<LinkedTreeMap> getBtnList(@Header("cookie") String cookie );
+
 
     @Headers("Content-Type : application/json")
     @POST("/clicky/btn/func")

@@ -92,7 +92,7 @@ public class ButtonList extends ActionBarActivity {
         SharedPreferences prefs = getSharedPreferences("PrefName", MODE_PRIVATE);
         String id = prefs.getString("id", "");
 
-        new HttpHandler().getBtnList(id, new MyCallback() {
+        new HttpHandler().getBtnList(new MyCallback() {
             @Override
             public void httpProcessing(JSONObject result) {
                 // TODO 결과에서 타이틀 얻어와야함

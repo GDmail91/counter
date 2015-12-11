@@ -313,15 +313,13 @@ public class HttpHandler {
 
     /**
      * 등록된 버튼 목록 얻어옴
-     * @param id 목록 얻어올 유저 ID
      * @param callback result 콜백
      */
-    public void getBtnList(String id, final MyCallback callback) {
+    public void getBtnList(final MyCallback callback) {
         // 보내는 데이터
         cookie = ApplicationClass.app.getToken();
         Log.d(TAG, "쿠키: "+cookie);
-        Log.d(TAG, "ID: "+id);
-        final Call<LinkedTreeMap> responseData = httpService.getBtn(cookie, id);
+        final Call<LinkedTreeMap> responseData = httpService.getBtnList(cookie);
 
         responseData.enqueue(new Callback<LinkedTreeMap>() {
             @Override

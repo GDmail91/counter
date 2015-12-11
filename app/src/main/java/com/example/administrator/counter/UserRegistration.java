@@ -1,22 +1,15 @@
 package com.example.administrator.counter;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,22 +26,10 @@ public class UserRegistration extends Activity {
     private EditText user_pw;
     private JSONObject jobj = new JSONObject();
 
-    private ApplicationClass app;
-
-    // GCM 관련 변수
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    private BroadcastReceiver mRegistrationBroadcastReceiver;
-    private String token;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_regist_layout);
-
-        // 토큰생성 받는 리시버
-        registBroadcastReceiver();
-
-        app = (ApplicationClass)getApplicationContext();
 
         user_id = (EditText) findViewById(R.id.user_id);
         user_pw = (EditText) findViewById(R.id.user_pw);
@@ -59,7 +40,7 @@ public class UserRegistration extends Activity {
             public void onClick(View v) {
                 try {
                     // 회원가입할때 토큰 생성
-                    getInstanceIdToken();
+                    registration();
                     Log.d(TAG, "토큰생성");
 
                     // id와 password는 통신전에 셋팅 (reg_id는 토큰생성후)
@@ -74,150 +55,66 @@ public class UserRegistration extends Activity {
     }
 
 
-    // GCM 토큰 생성
     /**
-     * Instance ID를 이용하여 디바이스 토큰을 가져오는 RegistrationIntentService를 실행한다.
+     * 회원가입 프로세스
      */
-    public void getInstanceIdToken() {
-        if (checkPlayServices()) {
-            // Start IntentService to register this application with GCM.
-            Intent intent = new Intent(this, RegistrationIntentService.class);
-            startService(intent);
-            Log.d(TAG, "토큰 생성 서비스 실행");
-        }
-    }
+    public void registration() {
+        // 여기서 통신 실행
 
-    /**
-     * LocalBroadcast 리시버를 정의한다. 토큰을 획득하기 위한 READY, GENERATING, COMPLETE 액션에 따라 UI에 변화를 준다.
-     */
-    public void registBroadcastReceiver(){
-        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+        ProgressBar pb1 = (ProgressBar) findViewById(R.id.ProgressBar01);
+        pb1.setVisibility(View.VISIBLE);
+
+        Log.d(TAG, "회원가입 통신 실행");
+
+        // 회원가입 통신 실행
+        new HttpHandler().joinUser(jobj.toString(), new MyCallback() {
             @Override
-            public void onReceive(Context context, Intent intent) {
-                String action = intent.getAction();
+            public void httpProcessing(JSONObject result) {
+                Log.d(TAG, "회원가입 콜백 받음");
+                try {
+                    /**
+                     *  id, password 저장, 프로그레스바 제거 및 액티비티 변경
+                     */
 
+                    // Preferences에 id, password 저장
+                    SharedPreferences prefs = getSharedPreferences("PrefName", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
 
-                if(action.equals(QuickstartPreferences.REGISTRATION_READY)){
-                    // 액션이 READY일 경우
-                    // TODO
-                    Log.d(TAG, "READY");
-                } else if(action.equals(QuickstartPreferences.REGISTRATION_GENERATING)){
-                    // 액션이 GENERATING일 경우
-                    // TODO
-                    Log.d(TAG, "GENERATING");
-                } else if(action.equals(QuickstartPreferences.REGISTRATION_COMPLETE)){
-                    // 액션이 COMPLETE일 경우//////////////////////////// 여기서 통신 실행
-                    Log.d(TAG, "COMPLETE");
-                    token = intent.getStringExtra("token");
+                    // 프로그래스바 제거
+                    ProgressBar pb1 = (ProgressBar) findViewById(R.id.ProgressBar01);
+                    pb1.setVisibility(View.INVISIBLE);
 
-                    ProgressBar pb1 = (ProgressBar)findViewById(R.id.ProgressBar01);
-                    pb1.setVisibility(View.VISIBLE);
+                    Toast toast;
+                    // 결과에 따라서 인텐트 생성, 액티비티실행
+                    if (result.getBoolean("status")) {
+                        editor.putString("id", user_id.getText().toString());
+                        editor.putString("password", user_pw.getText().toString());
+                        editor.putBoolean("is_login", true);
+                        editor.commit();
 
-                    Log.d(TAG, "회원가입 통신 실행");
+                        toast = Toast.makeText(getApplicationContext(), "회원가입 성공", Toast.LENGTH_LONG);
+                        toast.show();
 
-                    try {
-                        jobj.put("reg_id", token);
+                        Log.d(TAG, "회원가입 성공");
 
-                        // 회원가입 통신 실행
-                        new HttpHandler().joinUser(jobj.toString(), new MyCallback() {
-                            @Override
-                            public void httpProcessing(JSONObject result) {
-                                Log.d(TAG, "회원가입 콜백 받음");
-                                try {
-                                    /**
-                                     *  id, password 저장, 프로그레스바 제거 및 액티비티 변경
-                                     */
+                        Intent nextIntent = new Intent(UserRegistration.this, Entrance.class);
+                        nextIntent.addFlags(nextIntent.FLAG_ACTIVITY_CLEAR_TASK);
+                        nextIntent.addFlags(nextIntent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(nextIntent);
 
-                                    // Preferences에 id, password 저장
-                                    SharedPreferences prefs = getSharedPreferences("PrefName", MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = prefs.edit();
+                    } else {
+                        toast = Toast.makeText(getApplicationContext(), "회원가입 실패 : " + result.getString("message"), Toast.LENGTH_LONG);
+                        toast.show();
 
-                                    // 프로그래스바 제거
-                                    ProgressBar pb1 = (ProgressBar) findViewById(R.id.ProgressBar01);
-                                    pb1.setVisibility(View.INVISIBLE);
+                        Log.d(TAG, "회원가입 실패 : " + result.getString("message"));
 
-                                    Toast toast;
-                                    // 결과에 따라서 인텐트 생성, 액티비티실행
-                                    if (result.getBoolean("status")) {
-                                        editor.putString("id", user_id.getText().toString());
-                                        editor.putString("password", user_pw.getText().toString());
-                                        editor.putBoolean("is_login", true);
-                                        editor.commit();
-
-                                        toast = Toast.makeText(getApplicationContext(), "회원가입 성공", Toast.LENGTH_LONG);
-                                        toast.show();
-
-                                        Log.d(TAG, "회원가입 성공");
-
-                                        Log.d(TAG, "GCM 토큰 : " + prefs.getString("gcm_token", ""));
-
-                                        Intent nextIntent = new Intent(UserRegistration.this, Entrance.class);
-                                        nextIntent.addFlags(nextIntent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        nextIntent.addFlags(nextIntent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(nextIntent);
-
-                                    } else {
-                                        toast = Toast.makeText(getApplicationContext(), "회원가입 실패 : " + result.getString("message"), Toast.LENGTH_LONG);
-                                        toast.show();
-
-                                        Log.d(TAG, "회원가입 실패 : " + result.getString("message"));
-
-                                    }
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-
             }
-        };
+        });
     }
 
-    /**
-     * 앱이 실행되어 화면에 나타날때 LocalBoardcastManager에 액션을 정의하여 등록한다.
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(QuickstartPreferences.REGISTRATION_READY));
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(QuickstartPreferences.REGISTRATION_GENERATING));
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(QuickstartPreferences.REGISTRATION_COMPLETE));
-
-    }
-
-    /**
-     * 앱이 화면에서 사라지면 등록된 LocalBoardcast를 모두 삭제한다.
-     */
-    @Override
-    protected void onPause() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
-        super.onPause();
-    }
-
-    /**
-     * Google Play Service를 사용할 수 있는 환경이지를 체크한다.
-     */
-    private boolean checkPlayServices() {
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
-                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
-            } else {
-                Log.i(TAG, "This device is not supported.");
-                finish();
-            }
-            return false;
-        }
-        return true;
-    }
 }
