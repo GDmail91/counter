@@ -25,13 +25,15 @@ public class Stopwatch extends Activity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stopwatch);
-
         cm = (Chronometer) findViewById(R.id.chronometer1);
         miliTextView = (TextView) findViewById(R.id.textView1);
         resultLayout = (LinearLayout)findViewById(R.id.linearLayout1);
 
         final ToggleButton tb = (ToggleButton) findViewById(R.id.toggleButton1);
 
+
+
+        
         tb.setOnClickListener(
                 new Button.OnClickListener(){
                     public void onClick(View v){
@@ -67,11 +69,18 @@ public class Stopwatch extends Activity {
             public void onChronometerTick(Chronometer chronometer){
                 long elapsedMillis = SystemClock.elapsedRealtime() - cm.getBase();
                 DecimalFormat numFormatter = new DecimalFormat("###,###");
-                String output = numFormatter.format(elapsedMillis);
-                miliTextView.setText("밀리초:"+output);
+//                String output = numFormatter.format(elapsedMillis);
+//                miliTextView.setText("밀리초:"+output);
             }
         });
     }
+
+    public void start_stopwatch(){
+        cm.setBase(SystemClock.elapsedRealtime());
+        cm.start();
+        num = 1;
+    }
+
 
     private void markRecord(){
         long elapsedMillis = SystemClock.elapsedRealtime() - cm.getBase();

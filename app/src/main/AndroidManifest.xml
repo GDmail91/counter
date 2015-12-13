@@ -68,6 +68,11 @@
         </receiver>
         <!-- [END Alarm_receiver] -->
 
+        <receiver android:name=".AlarmReceiver"
+            android:process=":remote">
+
+        </receiver>
+
         <activity
             android:name=".ButtonList"
             android:label="@string/app_name" >
@@ -112,6 +117,14 @@
             android:label=".timer">
         </activity>
 
+        <activity
+            android:name=".DownTimer"
+            android:label=".downTimer">
+        </activity>
+    <activity
+        android:name=".Alarm_r2"
+        android:label=".alarm_r2">
+    </activity>
         <activity
             android:name=".Messenger"
             android:label = ".messenger">

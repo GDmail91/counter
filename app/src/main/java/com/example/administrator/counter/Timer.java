@@ -61,7 +61,7 @@ public class Timer extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timer);
-
+        Log.d("superdroid","set Timer");
         edtTimerValue = (EditText)findViewById(R.id.edtTimerValue);
         setTime = (Button)findViewById(R.id.setTime);
         startTime = (Button)findViewById(R.id.startTime);
@@ -89,7 +89,8 @@ public class Timer extends Activity{
 
          if (v.getId() == R.id.setTime){
              int time = Integer.parseInt(edtTimerValue.getText().toString());
-
+             Log.d("superdroid","timer test");
+             Log.d("superdroid",String.valueOf(time));
          }
         }
     }
@@ -99,6 +100,7 @@ public class Timer extends Activity{
         int time = 0;
         if (edtTimerValue.getText().toString().equals("")){
             time = Integer.parseInt(edtTimerValue.getText().toString());
+            Log.d("superdroid",String.valueOf(time));
         }
         else
             Toast.makeText(this,"please Enter Minutes...",Toast.LENGTH_LONG).show();
