@@ -32,14 +32,20 @@
         </activity>
 
         <activity
-            android:name=".Timer"
-            android:label=".timer">
+            android:name=".DownTimer"
+            android:label=".downTimer">
         </activity>
+    <activity
+        android:name=".Alarm_r2"
+        android:label=".alarm_r2">
 
+    </activity>
     <activity
         android:name=".Messenger"
         android:label = ".messenger">
     </activity>
+        <receiver android:name=".AlarmReceiver"
+                android:process=":remote"></receiver>
 
         <service android:name=".AlarmService">
             <intent-filter>
@@ -47,12 +53,7 @@
             </intent-filter>
         </service>
 
-        <service android:name="TimerService">
-            <intent-filter>
-                <action android:name="com.example.administrator.counter.TimerService"/>
-            </intent-filter>
 
-        </service>
         <service android:name=".CountService">
             <intent-filter>
                 <action android:name="com.example.administrator.counter.CountService"/>

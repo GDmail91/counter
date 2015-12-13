@@ -110,19 +110,19 @@ public class MiniTabFragment extends Fragment {
                     mButtonAction4.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(getActivity(), Timer.class);
+                            Intent intent = new Intent(getActivity(), DownTimer.class);
                             startActivity(intent);
                         }
                     });
 
-                    // 다섯번째 버튼
-//                    mButtonAction5.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            Intent intent = new Intent(getActivity(), timer.class);
-//                            startActivity(intent);
-//                        }
-//                    });
+
+                    mButtonAction5.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getActivity(), Alarm_r2.class);
+                            startActivity(intent);
+                        }
+                    });
 
                     break;
 
