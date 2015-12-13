@@ -104,7 +104,8 @@ public class ButtonList extends ActionBarActivity {
                             // ListView에 아이템 추가
                             m_ListAdapter.add(
                                     tempTitles[i],
-                                    data.getJSONObject(i).getString("mac_addr")
+                                    data.getJSONObject(i).getString("mac_addr"),
+                                    data.getJSONObject(i).getInt("fid")
                             );
                         }
 

@@ -19,7 +19,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         String action = intent.getAction();
 
         if (action.equals("com.example.administrator.ALARM_RING")) {
-            // TODO Auto-generated method stub
+            // TODO 여기선 버튼이 처음 울렸을때 동작해야하는거
             //토스트 찍고~
             Toast.makeText(context, "Alarm Received!", Toast.LENGTH_LONG).show();
 
@@ -49,7 +49,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             //노티를 던진다!
             notifier.notify(1, notify);
         } else if (action.equals("com.example.administrator.ALARM_END")) {
-            // TODO Auto-generated method stub
+            // TODO 여기선 버튼이 끝날때 동작해야하는거
             //토스트 찍고~
             Toast.makeText(context, "Alarm Received!", Toast.LENGTH_LONG).show();
 

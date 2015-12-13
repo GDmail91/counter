@@ -94,6 +94,7 @@ public class MiniTabFragment extends Fragment {
 
                             Intent intent = new Intent(getActivity(), Count.class);
                             intent.putExtra("mac_addr", MAC_ADDR);
+                            intent.putExtra("flag", "set");
                             startActivity(intent);
                         }
                     });
@@ -141,6 +142,7 @@ public class MiniTabFragment extends Fragment {
 
                             Intent intent = new Intent(getActivity(), Check.class);
                             intent.putExtra("mac_addr", MAC_ADDR);
+                            intent.putExtra("flag", "set");
                             startActivity(intent);
                         }
                     });

@@ -1,6 +1,8 @@
 package com.example.administrator.counter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,10 +22,12 @@ public class ButtonAdapter extends BaseAdapter {
 
     private ArrayList<String> m_List;
     private ArrayList<String> m_Mac;
+    private ArrayList<Integer> m_Fid;
 
     public ButtonAdapter() {
         m_List = new ArrayList<String>();
         m_Mac = new ArrayList<String>();
+        m_Fid = new ArrayList<Integer>();
     }
 
     // 현재 아이템의 수를 리턴
@@ -76,8 +80,42 @@ public class ButtonAdapter extends BaseAdapter {
 
                 @Override
                 public void onClick(View v) {
-                    // 터치 시 해당 아이템 이름 출력
+                    // 터치 시 해당 아이템 이름 출력, fid에 따른 뷰 띄워줌
                     Toast.makeText(context, "리스트 클릭 : " + m_List.get(pos) +"\n MAC_ADDR: "+m_Mac.get(pos), Toast.LENGTH_SHORT).show();
+                    Log.d("ListAdapter", "리스트 아이템:"+m_Fid.get(pos)+","+m_Mac.get(pos));
+                    Intent intent = null;
+                    switch (m_Fid.get(pos)) {
+                        case 0:
+                            intent = new Intent(context, MainActivity.class);
+
+                            break;
+                        case 1:
+                            intent = new Intent(context, Count.class);
+
+                            intent.putExtra("flag", "reset");
+                            break;
+                        case 2:
+                            intent = new Intent(context, Alarm.class);
+                            break;
+                        case 3:
+                            intent = new Intent(context, Stopwatch.class);
+                            break;
+                        case 4:
+                            intent = new Intent(context, Check.class);
+
+                            intent.putExtra("flag", "reset");
+                            break;
+                        case 5:
+                            intent = new Intent(context, Timer.class);
+                            break;
+                        case 6:
+                            intent = new Intent(context, Message.class);
+                            break;
+                    }
+
+
+                    intent.putExtra("mac_addr", m_Mac.get(pos));
+                    context.startActivity(intent);
                 }
             });
 
@@ -97,9 +135,10 @@ public class ButtonAdapter extends BaseAdapter {
     }
 
     // 외부에서 아이템 추가 요청 시 사용
-    public void add(String _msg, String _mac) {
+    public void add(String _msg, String _mac, int _fid) {
         m_List.add(_msg);
         m_Mac.add(_mac);
+        m_Fid.add(_fid);
     }
 
     // 외부에서 아이템 삭제 요청 시 사용

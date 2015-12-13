@@ -16,10 +16,21 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="등록"
-        android:id="@+id/submit_count"
+        android:text="초기화"
+        android:id="@+id/reset_count"
         android:layout_below="@+id/title"
         android:layout_centerHorizontal="true"
-        android:onClick="submit_count" />
+        android:onClick="reset_count" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="기능 재설정"
+        android:id="@+id/reset_func"
+        android:onClick="resetFunc"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

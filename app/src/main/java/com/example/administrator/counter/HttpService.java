@@ -36,7 +36,8 @@ public interface HttpService {
     @GET("/clicky/btn/func/{mac}")
     Call<LinkedTreeMap> getBtn(@Header("cookie") String cookie, @Path("mac") String mac_addr );
 
-
+    @POST("/clicky/btn/func/{func}")
+    Call<LinkedTreeMap> resetFunc(@Header("cookie") String cookie, @Path("func") String func, @Body RequestBody requestBody);
 
     @Headers("Content-Type : application/json")
     @POST("/clicky/btn/func")
