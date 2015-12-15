@@ -10,18 +10,23 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
+
 /**
  * Created by YS on 2015-12-08.
  */
 public class ClickReceiver extends BroadcastReceiver {
     private static final String TAG = "ClickReceiver";
 
+    // 타이머 임시저장소
+    private static DownTimer dtr = new DownTimer();
+
     @Override
     public void onReceive(final Context context, Intent intent) {
         String action = intent.getAction();
 
         if (action.equals("com.example.administrator.CLICK_BUTTON")) {
-            String macAddr = intent.getStringExtra("MAC_ADDR");
+            final String macAddr = intent.getStringExtra("MAC_ADDR");
 
             // TODO 내부 브로드캐스트 리시버로 받았으니 서버와 동기화하는 작업 필요
             // TODO 여기서 모든 작업이 이루어지게 했지만 이렇게 하는것보다 콜백으로 받아온 result를
@@ -74,7 +79,21 @@ public class ClickReceiver extends BroadcastReceiver {
                                     int h2 = Integer.valueOf(e[0]);
                                     int m2 = Integer.valueOf(e[1]);
 
-                                    int flag = 1;
+                                    // 현재 시간 가져옴
+                                    Calendar c = Calendar.getInstance();
+                                    int mHour = c.get(Calendar.HOUR_OF_DAY);
+                                    int mMinute = c.get(Calendar.MINUTE);
+
+                                    int flag = 0;
+
+                                    // 현재 상태 파악
+                                    if (h1 <= mHour && m1 <= mMinute
+                                     && h2 >= mHour && m2 >= mMinute) {
+                                        flag = 1;
+                                        getMessage(context, data.getString("title")+" 수행이 끝났어요");
+                                    }
+/*
+
                                     new AlarmService().getInfo(h1, m1, h2, m2);
                                     // TODO 위 new AlarmService().getInfo(h1, m1, h2, m2); 의 결과값에 따라서
                                     // TODO flag 설정하여 getMessage에 보내는 메세지를 다르게 해야함
@@ -89,6 +108,7 @@ public class ClickReceiver extends BroadcastReceiver {
                                             getMessage(context, "할일을 못했어요ㅠ");
                                             break;
                                     }
+*/
 
                                     break;
 
@@ -108,11 +128,28 @@ public class ClickReceiver extends BroadcastReceiver {
 
                                 case 5 :
                                     // 타이머
+                                    Log.d(TAG, "테스트 타이머 클릭");
+                                    info = new JSONObject(data.getString("info"));
+                                    Log.d(TAG, info.toString());
+                                    int check = info.getInt("time_check");
+                                    int time = info.getInt("time");
+
+                                    if (check == 1) {
+                                        // 계속하라는 신호
+                                        dtr.startcountdown(macAddr, time);
+                                        Log.d(TAG, "타이머 작동: "+time);
+                                    } else if (check == -1){
+                                        // 현재꺼 중지하고 값 전송
+                                        dtr.killcountdown(macAddr);
+                                    }
+
+                                    // TODO 타이머의 팝업 텍스트 설정
+                                    //getMessage(context, Integer.toString(info.getInt("check")));
                                     break;
 
                                 case 6 :
                                     // 메세지
-                                    Log.d(TAG, "테스트 알람 클릭");
+                                    Log.d(TAG, "테스트 메세지 클릭");
                                     info = new JSONObject(data.getString("info"));
 
                                     getMessage(context, info.getString("content"));

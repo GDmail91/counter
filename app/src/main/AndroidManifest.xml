@@ -68,11 +68,6 @@
         </receiver>
         <!-- [END Alarm_receiver] -->
 
-        <receiver android:name=".AlarmReceiver"
-            android:process=":remote">
-
-        </receiver>
-
         <activity
             android:name=".ButtonList"
             android:label="@string/app_name" >
@@ -83,11 +78,20 @@
             </intent-filter>
         </activity>
 
+        <!-- [START 로그인 관련 액티비티] -->
+        <activity android:name=".Entrance" />
+        <activity android:name=".UserRegistration" />
+        <!-- [END 로그인 관련 액티비티] -->
+
         <activity
             android:name=".NfcReader"
             android:label="nfc_reader">
         </activity>
 
+        <activity
+            android:name=".ButtonRegPage"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
 
         <activity
             android:name=".MainActivity"
@@ -142,20 +146,15 @@
 
         <service android:name=".AlarmService">
             <intent-filter>
-                <action android:name="com.example.administrator.counter_sub.AlarmService"/>
+                <action android:name="com.example.administrator.counter.AlarmService"/>
             </intent-filter>
         </service>
 
         <service android:name=".TimerService">
             <intent-filter>
-                <action android:name="com.example.administrator.counter_sub.TimerService"/>
+                <action android:name="com.example.administrator.counter.TimerService"/>
             </intent-filter>
         </service>
-
-        <!-- [START 로그인 관련 액티비티] -->
-        <activity android:name=".Entrance" />
-        <activity android:name=".UserRegistration" />
-        <!-- [END 로그인 관련 액티비티] -->
 
         <service android:name=".CountService">
             <intent-filter>
@@ -188,6 +187,11 @@
             android:name="com.example.administrator.counter.RegistrationIntentService"
             android:exported="false">
         </service>
+        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
         <!-- [END gcm_registration_service] -->
 
     </application>

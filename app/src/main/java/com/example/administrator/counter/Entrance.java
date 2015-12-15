@@ -69,39 +69,6 @@ public class Entrance extends Activity {
 
         Log.d(TAG, "로그인 상태 : " + is_login);
 
-        // 자동 로그인 프로세스
-        if (is_login) {
-            Log.d(TAG, "자동로그인 대기!");
-            Log.d(TAG, "등록된 ID: " + prefs.getString("id", ""));
-            Log.d(TAG, "등록된 PW: " + prefs.getString("password", ""));
-            user_id.setText(prefs.getString("id", ""));
-            user_pw.setText(prefs.getString("password", ""));
-            String token = prefs.getString("gcm_token", "");
-
-            ApplicationClass.app = (ApplicationClass)getApplicationContext();
-            // 로그인 통신 실행
-            try {
-                String userID = user_id.getText().toString();
-                String userPW = user_pw.getText().toString();
-
-                jobj = new JSONObject()
-                            .put("id", userID)
-                            .put("password", userPW)
-                            .put("reg_id", token);
-
-                // 통신 실행
-                new HttpHandler().loginUser(jobj.toString(), new MyCallback() {
-                    @Override
-                    public void httpProcessing(JSONObject result) {
-                        loginProcess(result);
-                    }
-                });
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
         pb1.setVisibility(View.INVISIBLE);
 
         // 로그인 프로세스

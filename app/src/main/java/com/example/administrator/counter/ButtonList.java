@@ -43,12 +43,53 @@ public class ButtonList extends ActionBarActivity {
 
         Log.d(TAG, "로그인 상태 : " + is_login);
 
-        // 로그인이 되어있지 않다면 로그인 창으로 이동
-        if (!is_login) {
-            Intent intent = new Intent(ButtonList.this, Entrance.class);
-            intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+        // 자동 로그인 프로세스
+        if (is_login) {
+            Log.d(TAG, "자동로그인 대기!");
+            Log.d(TAG, "등록된 ID: " + prefs.getString("id", ""));
+            Log.d(TAG, "등록된 PW: " + prefs.getString("password", ""));
+            String token = prefs.getString("gcm_token", "");
+
+            ApplicationClass.app = (ApplicationClass)getApplicationContext();
+            // 로그인 통신 실행
+            try {
+                String userID = prefs.getString("id", "");
+                String userPW = prefs.getString("password", "");
+
+                JSONObject jobj = new JSONObject()
+                        .put("id", userID)
+                        .put("password", userPW)
+                        .put("reg_id", token);
+
+                // 통신 실행
+                new HttpHandler().loginUser(jobj.toString(), new MyCallback() {
+                    @Override
+                    public void httpProcessing(JSONObject result) {
+                        try {
+                            // 결과에 따라서 인텐트 생성, 액티비티실행
+                            Toast toast;
+                            if (result.getBoolean("status")) {
+
+                                toast = Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_LONG);
+                                toast.show();
+
+                                Log.d(TAG, "로그인 성공");
+
+                            } else {
+                                toast = Toast.makeText(getApplicationContext(), "로그인 실패 : " + result.getString("message"), Toast.LENGTH_LONG);
+                                toast.show();
+
+                                Log.d(TAG, "로그인 실패");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         setContentView(R.layout.button_list);
@@ -91,6 +132,8 @@ public class ButtonList extends ActionBarActivity {
                     // 결과에 따라서 인텐트 생성, 액티비티실행
                     if (status) {
                         Log.d(TAG, "버튼정보 가져옴");
+
+                        Log.d(TAG, "버튼 data 값: " + result.getString("data"));
 
                         JSONArray data = new JSONArray(result.getString("data"));
                         Log.d(TAG, data.toString());

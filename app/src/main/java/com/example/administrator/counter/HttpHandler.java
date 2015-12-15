@@ -3,10 +3,12 @@ package com.example.administrator.counter;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.RequestBody;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -316,6 +318,65 @@ public class HttpHandler {
     }
 
     /**
+     * 버튼 기능 정보 추가(타이머)
+     * @param func 추가할 기능
+     * @param jobj JSON 파싱된 기능정보
+     * @param callback result 콜백
+     */
+    public void putFunc(String func, String jobj, final MyCallback callback) {
+        // 보내는 데이터
+        Log.d(TAG, jobj);
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jobj);
+        cookie = ApplicationClass.app.getToken();
+        Log.d(TAG, cookie);
+        final Call<LinkedTreeMap> responseData = httpService.putFunc(cookie, func, requestBody);
+
+        Log.d(TAG, "등록하는 데이터: "+jobj);
+        responseData.enqueue(new Callback<LinkedTreeMap>() {
+            @Override
+            public void onResponse(Response<LinkedTreeMap> response, Retrofit retrofit) {
+                if (response.isSuccess()) {
+                    try {
+                        // 받은 데이터
+                        Log.d(TAG, response.body().toString());
+                        LinkedTreeMap temp = response.body();
+                        String status = temp.get("status").toString();
+                        String messages = temp.get("message").toString();
+                        JSONObject data = null;
+                        if (temp.get("data") != null)
+                            data = new JSONObject(temp.get("data").toString());
+
+                        result = new JSONObject("{\"status\":" + status + ",\"message\":\"" + messages + "\",\"data\":\"" + data + "\"}");
+                        Log.d(TAG, "성공");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    // 받은 데이터 출력
+                    Log.d(TAG, result.toString());
+
+                } else {
+                    String test = response.message();
+                    Log.d(TAG, test);
+
+                    // TODO error
+                }
+
+                callback.httpProcessing(result);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+                // TODO 실패
+                Log.d(TAG, t.toString());
+                Log.d(TAG, "아예실패");
+            }
+        });
+
+    }
+
+    /**
      * 버튼 정보 얻어옴
      * @param mac_addr 얻어올 버튼의 MAC Address
      * @param callback result 콜백
@@ -337,11 +398,11 @@ public class HttpHandler {
                         LinkedTreeMap temp = response.body();
                         String status = temp.get("status").toString();
                         String messages = temp.get("message").toString();
-                        String data = "";
+                        JSONObject data = new JSONObject();
                         if (temp.get("data") != null)
-                            data = temp.get("data").toString();
+                            data = new JSONObject(new Gson().toJson(temp.get("data")));
 
-                        result = new JSONObject("{\"status\":"+status+",\"message\":\""+messages+"\",\"data\":\""+data+"\"}");
+                        result = new JSONObject("{\"status\":"+status+",\"message\":\""+messages+"\",\"data\":"+data.toString()+"}");
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -390,11 +451,13 @@ public class HttpHandler {
                         LinkedTreeMap temp = response.body();
                         String status = temp.get("status").toString();
                         String messages = temp.get("message").toString();
-                        String data = "";
+                        JSONArray data = new JSONArray();
                         if (temp.get("data") != null)
-                            data = temp.get("data").toString();
+                            data = new JSONArray(new Gson().toJson(temp.get("data")));
 
-                        result = new JSONObject("{\"status\":"+status+",\"message\":\""+messages+"\",\"data\":\""+data+"\"}");
+                        Log.d(TAG, "gson test: "+data.toString());
+
+                        result = new JSONObject("{\"status\":"+status+",\"message\":\""+messages+"\",\"data\":"+data.toString()+"}");
 
                     } catch (JSONException e) {
                         e.printStackTrace();

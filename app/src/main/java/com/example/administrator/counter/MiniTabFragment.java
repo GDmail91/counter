@@ -104,6 +104,8 @@ public class MiniTabFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(getActivity(), Stopwatch.class);
+                            intent.putExtra("mac_addr", MAC_ADDR);
+                            intent.putExtra("flag", "set");
                             startActivity(intent);
                         }
                     });
@@ -113,6 +115,8 @@ public class MiniTabFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(getActivity(), Alarm.class);
+                            intent.putExtra("mac_addr", MAC_ADDR);
+                            intent.putExtra("flag", "set");
                             startActivity(intent);
                         }
                     });
@@ -122,6 +126,8 @@ public class MiniTabFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(getActivity(), DownTimer.class);
+                            intent.putExtra("mac_addr", MAC_ADDR);
+                            intent.putExtra("flag", "set");
                             startActivity(intent);
                         }
                     });
@@ -131,6 +137,8 @@ public class MiniTabFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(getActivity(), Message.class);
+                            intent.putExtra("mac_addr", MAC_ADDR);
+                            intent.putExtra("flag", "set");
                             startActivity(intent);
                         }
                     });

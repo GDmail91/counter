@@ -71,7 +71,7 @@ public class ButtonAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     // 터치 시 해당 아이템 이름 출력
-                    Toast.makeText(context, m_List.get(pos), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "리스트 클릭 : " + m_List.get(pos) +"\n MAC_ADDR: "+m_Mac.get(pos), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -86,30 +86,39 @@ public class ButtonAdapter extends BaseAdapter {
                     Intent intent = null;
                     switch (m_Fid.get(pos)) {
                         case 0:
-                            intent = new Intent(context, MainActivity.class);
+                            intent = new Intent(context, ButtonRegPage.class);
+                            intent.putExtra("flag", "reset");
 
                             break;
                         case 1:
                             intent = new Intent(context, Count.class);
-
                             intent.putExtra("flag", "reset");
+
                             break;
                         case 2:
                             intent = new Intent(context, Alarm.class);
+                            intent.putExtra("flag", "reset");
+
                             break;
                         case 3:
                             intent = new Intent(context, Stopwatch.class);
+                            intent.putExtra("flag", "reset");
+
                             break;
                         case 4:
                             intent = new Intent(context, Check.class);
-
                             intent.putExtra("flag", "reset");
+
                             break;
                         case 5:
-                            intent = new Intent(context, Timer.class);
+                            intent = new Intent(context, DownTimer.class);
+                            intent.putExtra("flag", "reset");
+
                             break;
                         case 6:
                             intent = new Intent(context, Message.class);
+                            intent.putExtra("flag", "reset");
+
                             break;
                     }
 

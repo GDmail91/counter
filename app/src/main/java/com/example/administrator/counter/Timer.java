@@ -1,10 +1,9 @@
 package com.example.administrator.counter;
 
 import android.app.Activity;
-
 import android.content.ComponentName;
 import android.content.Context;
-
+import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -15,10 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.R.color;
 import android.widget.Toast;
-
-import java.util.Calendar;
 
 /**
  * Created by Administrator on 2015-12-08.
@@ -143,5 +139,17 @@ public class Timer extends Activity{
                 textViewShowTime.setVisibility(View.VISIBLE);
             }
         }.start();
+    }
+
+
+    /**
+     * 기능 재설정 버튼
+     * @param v
+     */
+    public void resetFunc(View v) {
+        Intent intent = new Intent(Timer.this, ButtonRegPage.class);
+        intent.putExtra("mac_addr", getIntent().getStringExtra("mac_addr"));
+
+        startActivity(intent);
     }
 };

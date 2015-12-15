@@ -43,6 +43,8 @@ public class NfcReader extends Activity {
         // TODO 임시로 다음스탭으로 넘어가는 버튼
         tempButton = (Button)findViewById(R.id.temp_button);
         tempTextedit = (EditText)findViewById(R.id.temp_textedit);
+
+
         tempButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +55,7 @@ public class NfcReader extends Activity {
                         Toast toast = Toast.makeText(getApplicationContext(), "버튼등록 완료", Toast.LENGTH_LONG);
                         toast.show();
 
-                        Intent intent = new Intent(NfcReader.this, MainActivity.class);
+                        Intent intent = new Intent(NfcReader.this, ButtonRegPage.class);
                         intent.putExtra("mac_addr", tempTextedit.getText().toString());
                         startActivity(intent);
                     }
@@ -85,6 +87,18 @@ public class NfcReader extends Activity {
             mTextView.setText("Make IntentFilter error");
         }
         mNFCTechLists = new String[][] { new String[] { NfcF.class.getName() } };
+    }
+
+    public void tempFunc(View v) {
+        try {
+            Thread.sleep(3000);
+
+            Intent intent = new Intent(NfcReader.this, ButtonRegPage.class);
+            intent.putExtra("mac_addr", "TESTMACADDR010");
+            startActivity(intent);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 

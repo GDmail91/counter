@@ -4,13 +4,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:padding="20dp"
+        android:background="#FFD101"
+        android:src="@drawable/ic_exposure_plus_1_white_48dp"
+        />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/title"
         android:layout_gravity="center_horizontal"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:layout_above="@+id/count"
+        android:textSize="30sp"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/count"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="30sp"
         android:gravity="center" />
 
     <Button
@@ -18,7 +44,7 @@
         android:layout_height="wrap_content"
         android:text="초기화"
         android:id="@+id/reset_count"
-        android:layout_below="@+id/title"
+        android:layout_below="@+id/count"
         android:layout_centerHorizontal="true"
         android:onClick="reset_count" />
 

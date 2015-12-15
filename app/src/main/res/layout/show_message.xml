@@ -4,18 +4,22 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:weightSum="1"
-    android:background="#000000">
+    android:background="#333333">
 
 
-        <TextView
-            android:layout_width="249dp"
-            android:layout_height="57dp"
-            android:background="#FFFFFF"
-            android:text="테스트 메세지"
-            android:textSize="20dip"
-            android:textColor="#000000"
-            android:id="@+id/message"
-            android:layout_weight="0.08" />
+
+    <TextView
+        android:layout_width="249dp"
+        android:layout_height="57dp"
+        android:background="#DDDDDD"
+        android:text="테스트 메세지"
+        android:textSize="20dip"
+        android:textColor="#000000"
+        android:textAlignment="center"
+        android:id="@+id/message"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -26,24 +30,30 @@
         android:id="@+id/buttonList">
 
 
-    <Button
+        <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_below="@+id/message"
             android:layout_weight="1"
-            android:text="닫기"
+            android:layout_margin="5dp"
+            android:scaleType="fitCenter"
             android:id="@+id/cancel"
-            android:onClick="onFinish" />
-        <Button
+            android:onClick="onFinish"
+            android:background="@drawable/no" />
+
+        <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_below="@+id/message"
             android:layout_alignRight="@+id/message"
             android:layout_weight="1"
-            android:text="확인"
+            android:layout_margin="5dp"
+            android:scaleType="fitCenter"
             android:id="@+id/confirm"
             android:onClick="onConfirm"
+            android:background="@drawable/ok"
             />
     </LinearLayout>
+
 
 </RelativeLayout>

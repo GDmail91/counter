@@ -10,10 +10,10 @@
         android:id="@+id/buttonSetup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onClick"
+        android:onClick="tempFunc"
         android:text="Setup"
         android:layout_below="@+id/textMessage"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:id="@+id/textMessage"
@@ -31,6 +31,7 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/nfc_tag" />
 
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,5 +47,6 @@
         android:layout_above="@+id/temp_button"
         android:layout_centerHorizontal="true"
         android:hint="MAC어드레스"/>
+
 
 </RelativeLayout>
