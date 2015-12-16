@@ -17,6 +17,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /**
  * Created by 영수 on 2015-09-04.
  */
@@ -117,8 +119,6 @@ public class ButtonList extends ActionBarActivity {
 
     // 버튼 목록 얻어오는 함수
     private void getButtonTitle() {
-        // ListView 생성
-        m_ListAdapter = new ButtonAdapter();
 
         new HttpHandler().getBtnList(new MyCallback() {
             @Override
@@ -138,19 +138,26 @@ public class ButtonList extends ActionBarActivity {
                         JSONArray data = new JSONArray(result.getString("data"));
                         Log.d(TAG, data.toString());
 
-                        String[] tempTitles = new String[data.length()];
-                        for (int i = 0; i < data.length(); i++) {
-                            // 버튼의 타이틀 받아옴
-                            tempTitles[i] = data.getJSONObject(i).getString("title");
-                            Log.d(TAG, tempTitles[i]);
+                        ArrayList<String> tmp_List = new ArrayList<String>();
+                        ArrayList<String> tmp_Mac = new ArrayList<String>();
+                        ArrayList<Integer> tmp_Fid = new ArrayList<Integer>();
 
-                            // ListView에 아이템 추가
-                            m_ListAdapter.add(
-                                    tempTitles[i],
+                        for (int i = 0; i < data.length(); i++) {
+                            // List 어댑터에 전달할 값들
+                            tmp_List.add(data.getJSONObject(i).getString("title"));
+                            tmp_Mac.add(data.getJSONObject(i).getString("mac_addr"));
+                            tmp_Fid.add(data.getJSONObject(i).getInt("fid"));
+
+
+                            /*m_ListAdapter.add(
+                                    data.getJSONObject(i).getString("title"),
                                     data.getJSONObject(i).getString("mac_addr"),
                                     data.getJSONObject(i).getInt("fid")
-                            );
+                            );*/
                         }
+
+                        // ListView 생성하면서 작성할 값 초기화
+                        m_ListAdapter = new ButtonAdapter(tmp_List, tmp_Mac, tmp_Fid);
 
                     } else {
                         Log.d(TAG, "버튼정보 가져오기 실패: " + message);
