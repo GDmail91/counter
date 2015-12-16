@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
@@ -142,8 +143,9 @@ public class NfcReader extends Activity {
         String tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG).toString();
         String strMsg = action + "\n\n" + tag;
         // 액션 정보와 태그 정보를 화면에 출력
-        mTextView.setText(strMsg);
+//        mTextView.setText(strMsg);
 
+        Log.d("NFC", "NFC msg: " + action +", "+tag);
         // 인텐트에서 NDEF 메시지 배열을 구한다
         Parcelable[] messages = intent.getParcelableArrayExtra(
                 NfcAdapter.EXTRA_NDEF_MESSAGES);
@@ -166,8 +168,8 @@ public class NfcReader extends Activity {
             // 레코드 데이터 종류가 텍스트 일때
             if( Arrays.equals(record.getType(), NdefRecord.RTD_TEXT) ) {
                 // 버퍼 데이터를 인코딩 변환
+                /**************여기서 데이터 받음 **/
                 strRec = byteDecoding(payload);
-                strRec = "Text: " + strRec;
             }
             // 레코드 데이터 종류가 URI 일때
             else if( Arrays.equals(record.getType(), NdefRecord.RTD_URI) ) {
@@ -177,7 +179,30 @@ public class NfcReader extends Activity {
             strMsg += ("\n\nNdefRecord[" + i + "]:\n" + strRec);
         }
 
-        mTextView.append(strMsg);
+//        mTextView.append(strMsg);
+        Log.d("NFC", "NFC msg: " + strRec);
+        final String mac_addr = strRec;
+        new HttpHandler().regBtn("{\"mac_addr\":\"" + mac_addr + "\"}", new MyCallback() {
+            @Override
+            public void httpProcessing(JSONObject result) {
+                // TODO if result의 status가 true 일경우만 다음 실행
+                try {
+                    if (result.getBoolean("status")) {
+                        Toast toast = Toast.makeText(getApplicationContext(), "버튼등록 완료", Toast.LENGTH_LONG);
+                        toast.show();
+
+                        Intent intent = new Intent(NfcReader.this, ButtonRegPage.class);
+                        intent.putExtra("mac_addr", mac_addr);
+                        startActivity(intent);
+                    } else {
+                        Toast toast = Toast.makeText(getApplicationContext(), "버튼등록 실패", Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     // 버퍼 데이터를 디코딩해서 String 으로 변환

@@ -76,7 +76,8 @@ public class ButtonAdapter extends BaseAdapter {
             holder = (ViewHolder)view.getTag();
 
         }
-///////////////////////////////
+
+        // 각 뷰에 값넣기
 
         // TextView에 현재 position의 문자열 추가
         holder.text.setText(m_List.get(position));

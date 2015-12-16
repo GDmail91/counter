@@ -10,7 +10,6 @@
         android:id="@+id/buttonSetup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="tempFunc"
         android:text="Setup"
         android:layout_below="@+id/textMessage"
         android:layout_centerHorizontal="true"/>
